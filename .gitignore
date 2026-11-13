@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Saídas pesadas do treino (as métricas em results/ entram no repositório)
+results/*/checkpoints/
+results/*/adaptador/*.safetensors
+results/*_teste_cpu/
+results.zip

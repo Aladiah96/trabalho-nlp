@@ -1,0 +1,10 @@
+# Versões fixadas para o exemplo de LoRA/QLoRA (Colab com GPU T4).
+# O torch NÃO é fixado aqui: usar o que já vem instalado no Colab (com CUDA).
+# A versão usada fica registrada em results/<config>/metricas.json.
+transformers==5.22.1
+peft==0.21.2
+trl==1.17.1
+bitsandbytes==0.50.2
+datasets==5.1.0
+accelerate==1.15.0
+matplotlib==3.11.2
