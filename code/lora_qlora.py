@@ -352,6 +352,13 @@ def executar(nome: str, quantizar: bool, r: int, teste_cpu: bool = False) -> dic
         eval_dataset=ds_avaliacao,
         processing_class=tokenizer,
     )
+    # O SFTTrainer converte os adaptadores de modelos quantizados para bf16 (como no
+    # artigo do QLoRA). A T4 não tem bf16 e o GradScaler do fp16 não aceita gradientes
+    # em bf16, então voltamos lora_A/lora_B para fp32. O otimizador só é criado em
+    # trainer.train(), então a troca vale para o treino inteiro.
+    for p in model.parameters():
+        if p.requires_grad:
+            p.data = p.data.float()
 
     eval_antes = trainer.evaluate()["eval_loss"]
     if gpu:
