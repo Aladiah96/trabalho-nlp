@@ -50,7 +50,7 @@ trabalho-nlp/
 │   ├── gerar_figuras.py          # curva de perda e tabela a partir de results/
 │   ├── notebook_colab.ipynb      # roda tudo no Colab (T4)
 │   └── requirements.txt          # versões fixadas
-├── results/                      # (gerado no Colab) métricas, logs e prints
+├── results/                      # métricas, logs, prints e curva de perda (Colab T4)
 └── slides/                       # (a criar) arquivo da apresentação
 ```
 
@@ -58,7 +58,7 @@ trabalho-nlp/
 
 - [x] Escolher modelo e dataset do exemplo: Qwen2.5-0.5B-Instruct + openassistant-guanaco.
 - [x] Escrever o código em `code/` (testado em CPU com `--teste-cpu`).
-- [ ] Rodar `code/notebook_colab.ipynb` no Colab (T4) e copiar `results/` para o repositório.
-- [ ] Preencher a tabela de resultados em [docs/exemplos-e-tradeoffs.md](docs/exemplos-e-tradeoffs.md).
+- [x] Rodar `code/notebook_colab.ipynb` no Colab (T4) e copiar `results/` para o repositório.
+- [x] Preencher a tabela de resultados em [docs/exemplos-e-tradeoffs.md](docs/exemplos-e-tradeoffs.md).
 - [ ] Montar os slides seguindo [docs/roteiro-apresentacao.md](docs/roteiro-apresentacao.md).
 - [ ] Ensaiar e cronometrar (máximo de 25 min).

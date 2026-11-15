@@ -1,0 +1,8 @@
+{
+  "fp16_bytes": 988065792,
+  "nf4_bytes": 451325952,
+  "exemplo_camada_4bit": "Linear4bit(in_features=896, out_features=896, bias=True)",
+  "fp16_gb": 0.988,
+  "nf4_gb": 0.451,
+  "reducao_x": 2.19
+}

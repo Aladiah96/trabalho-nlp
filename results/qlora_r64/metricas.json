@@ -1,0 +1,42 @@
+{
+  "config": "qlora_r64",
+  "quantizar": true,
+  "r": 64,
+  "lora_alpha": 128,
+  "treino": {
+    "n_treino": 800,
+    "n_avaliacao": 100,
+    "max_length": 512,
+    "batch": 4,
+    "acumulacao": 4,
+    "max_steps": 100,
+    "learning_rate": 0.0002,
+    "eval_steps": 25
+  },
+  "modelo": "Qwen/Qwen2.5-0.5B-Instruct",
+  "dataset": "timdettmers/openassistant-guanaco",
+  "n_treino_real": 800,
+  "n_avaliacao_real": 100,
+  "treinaveis": 35192832,
+  "total": 529225600,
+  "percentual_treinavel": 6.6499,
+  "contagens_batem": true,
+  "memoria_modelo_base_gb": 0.724,
+  "pico_memoria_treino_gb": 1.597,
+  "tempo_treino_s": 352.7,
+  "segundos_por_passo": 3.53,
+  "perda_treino_final": 1.1493556022644043,
+  "perda_treino_media": 1.4903,
+  "eval_loss_antes": 1.9028,
+  "eval_loss_depois": 1.8906,
+  "tamanho_adaptador_mb": 140.82,
+  "ambiente": {
+    "python": "3.13.16",
+    "torch": "2.14.1+cu130",
+    "transformers": "5.22.1",
+    "peft": "0.21.2",
+    "trl": "1.17.1",
+    "bitsandbytes": "0.50.2",
+    "gpu": "Tesla T4"
+  }
+}

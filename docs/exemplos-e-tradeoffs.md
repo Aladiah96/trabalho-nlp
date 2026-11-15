@@ -51,8 +51,24 @@ Modelo: Qwen2.5-0.5B-Instruct, 100 passos, batch efetivo 16, α/r = 2 em todas a
 
 | Configuração | Parâmetros treináveis | % do total | Pico de memória (GB) | Tempo de treino | Perda final | eval_loss antes → depois | Tamanho do adaptador |
 |---|---|---|---|---|---|---|---|
-| LoRA (base 16 bits, r=16) | | | | | | | |
-| QLoRA (base NF4, r=16) | | | | | | | |
-| QLoRA (r=4) | | | | | | | |
-| QLoRA (r=64) | | | | | | | |
+| LoRA (base 16 bits, r=16) | 8.798.208 | 1,75% | 1,51 | 264 s (2,64 s/passo) | 1,438 | 1,807 → 1,768 | 35,2 MB |
+| QLoRA (base NF4, r=16) | 8.798.208 | 1,75% | 1,33 | 348 s (3,48 s/passo) | 1,491 | 1,903 → 1,842 | 35,2 MB |
+| QLoRA (r=4) | 2.199.552 | 0,44% | 1,27 | 349 s (3,49 s/passo) | 1,633 | 1,903 → 1,839 | 8,9 MB |
+| QLoRA (r=64) | 35.192.832 | 6,65% | 1,60 | 353 s (3,53 s/passo) | 1,149 | 1,903 → 1,891 | 140,8 MB |
 | Full FT | não rodado | 100% | ver [fundamentos.md §1](fundamentos.md) e artigos | | | | modelo inteiro |
+
+Fonte: `results/tabela_resultados.md` e `results/*/metricas.json`, GPU Tesla T4 no Colab, 15/11/2026. Os pesos do modelo base ocupam 0,99 GB em fp16 e 0,45 GB em NF4, 2,19× menos (`results/memoria_modelo.json`). As três contagens de parâmetros treináveis batem em todas as configurações, e todos os parâmetros treináveis são `lora_A`/`lora_B`.
+
+### O que os resultados mostram
+
+1. **A quantização custa qualidade antes mesmo do treino.** O `eval_loss` do modelo base sobe de 1,807 (fp16) para 1,903 (NF4), cerca de 5%. As respostas "antes" do QLoRA já são diferentes das do LoRA (`respostas.json`). Depois do treino, o QLoRA r=16 (1,842) não alcança o LoRA r=16 (1,768). Num modelo de 0,5B a perda pela quantização aparece bem; o artigo do QLoRA, com modelos de 7B a 65B, relata qualidade equivalente.
+2. **QLoRA é mais lento por passo:** 3,48 s × 2,64 s, cerca de 32% a mais, por causa da dequantização.
+3. **A economia de memória é pequena num modelo pequeno.** O pico caiu de 1,51 GB para 1,33 GB (−12%), não 2× nem 4×. Há três motivos:
+   - só as camadas lineares vão para 4 bits;
+   - as embeddings (151.936 × 896 ≈ 136M parâmetros, compartilhadas com o `lm_head`) são uma parte grande de um modelo de 0,5B;
+   - o `prepare_model_for_kbit_training` converte essas camadas não quantizadas para fp32. Por isso o modelo QLoRA ocupa 0,72 GB no treino, contra 0,45 GB medidos logo depois de carregar.
+
+   Num modelo de 7B, as lineares dominam e a redução se aproxima de 4× nos pesos (ver [fundamentos.md §4](fundamentos.md)).
+4. **`r` maior não é melhor por si só.** O r=64 teve a menor perda de treino (1,149), mas o `eval_loss` piorou depois do passo 50 (1,847 → 1,891). Com 35M parâmetros e 2 épocas sobre 800 exemplos, ele decorou o treino (a queda brusca da perda no passo 50 é o início da 2ª época). O r=4 (0,44% dos parâmetros) chegou ao mesmo `eval_loss` que o r=16. Isso está de acordo com a hipótese do posto baixo.
+5. **Os adaptadores são pequenos:** 8,9 a 141 MB, contra 0,99 GB do modelo em fp16. Foram salvos em fp32 (4 bytes por parâmetro); em fp16 teriam a metade.
+6. **As respostas mudam pouco.** O Qwen-Instruct já responde bem, e 100 passos no Guanaco mudam mais o estilo que o conteúdo. O argumento quantitativo é o `eval_loss` e a curva em `results/curva_perda.png`.

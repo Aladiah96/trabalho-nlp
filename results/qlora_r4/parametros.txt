@@ -1,0 +1,68 @@
+{
+  "print_trainable_parameters": "trainable params: 2,199,552 || all params: 496,232,320 || trainable%: 0.4433",
+  "treinaveis": 2199552,
+  "total": 496232320,
+  "percentual": 0.4433,
+  "treinaveis_requires_grad": 2199552,
+  "treinaveis_formula_r_d_mais_k": 2199552,
+  "contagens_batem": true,
+  "so_lora_A_e_lora_B": true,
+  "n_tensores_treinaveis": 336,
+  "exemplos_nomes_treinaveis": [
+    "base_model.model.model.layers.0.self_attn.q_proj.lora_A.default.weight",
+    "base_model.model.model.layers.0.self_attn.q_proj.lora_B.default.weight",
+    "base_model.model.model.layers.0.self_attn.k_proj.lora_A.default.weight",
+    "base_model.model.model.layers.0.self_attn.k_proj.lora_B.default.weight"
+  ],
+  "por_tipo_de_camada": {
+    "q_proj": {
+      "d": 896,
+      "k": 896,
+      "r": 4,
+      "por_camada": 7168,
+      "camadas": 24
+    },
+    "k_proj": {
+      "d": 128,
+      "k": 896,
+      "r": 4,
+      "por_camada": 4096,
+      "camadas": 24
+    },
+    "v_proj": {
+      "d": 128,
+      "k": 896,
+      "r": 4,
+      "por_camada": 4096,
+      "camadas": 24
+    },
+    "o_proj": {
+      "d": 896,
+      "k": 896,
+      "r": 4,
+      "por_camada": 7168,
+      "camadas": 24
+    },
+    "gate_proj": {
+      "d": 4864,
+      "k": 896,
+      "r": 4,
+      "por_camada": 23040,
+      "camadas": 24
+    },
+    "up_proj": {
+      "d": 4864,
+      "k": 896,
+      "r": 4,
+      "por_camada": 23040,
+      "camadas": 24
+    },
+    "down_proj": {
+      "d": 896,
+      "k": 4864,
+      "r": 4,
+      "por_camada": 23040,
+      "camadas": 24
+    }
+  }
+}

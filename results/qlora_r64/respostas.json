@@ -1,0 +1,17 @@
+[
+  {
+    "prompt": "Explique em poucas frases o que é aprendizado de máquina.",
+    "antes": "Aprendizado de Máquina é uma técnica de inteligência artificial que permite a criação de modelos de aprendizagem automática para realizar tarefas de classificação e predição. É um processo de treinamento onde os dados são usados para criar uma rede neuronal ou modelo de aprendizado de máquina que pode ser usado para fazer predictions ou classifyções de novos dados. Aprendizado de Máquina é uma ferramenta poderosa para aplicar técnicas de machine learning na área da ciência da computação e de outras áreas de pesquisa.",
+    "depois": "Aprendizado de Máquina é uma técnica de aprendizagem automática que permite a criação de modelos complexos e eficientes para processar dados. É um campo de pesquisa e desenvolvimento avançado na ciência da computação que busca criar sistemas automatizados que podem aprender e adaptar-se a novas situações ou condições, baseados em informações previamente armazenadas."
+  },
+  {
+    "prompt": "Escreva um e-mail curto pedindo para remarcar uma reunião.",
+    "antes": "Olá,\n\nEstou escrevendo este email para você para solicitar sua presença na reunião que está programada para às 15h de hoje.\n\nAqui está o texto:\n\n\"Seja lá qual seja a reunião, eu gostaria que vocês se juntas estivessem presente. Espero que isso possa ser feito com sucesso.\"\n\nLembre-se: essa é apenas uma sugestão baseada em um exemplo. Você pode ajustar conforme necessário.",
+    "depois": "Olá,\n\nEstou escrevendo para te pedir que você me informe sobre o que gostaria de fazer na reunião que está prevista para esta quinta-feira.\n\nSe você estiver disponível, por favor, envie-me os detalhes necessários para que eu possa ajudar você a realizar sua tarefa.\n\nAtenciosamente,\n[Seu nome]"
+  },
+  {
+    "prompt": "What are three tips for staying focused while studying?",
+    "antes": "Staying focused while studying can be challenging, but here are three tips that may help:\n\n1. Set clear goals: Before starting your study session, make sure you have a clear understanding of what you want to achieve. This will help you stay on track and avoid distractions.\n\n2. Use the Pomodoro Technique: This technique involves working in short bursts of time (typically 25 minutes) followed by a five-minute break. This helps maintain focus and prevents burnout.\n\n3. Take breaks: Taking regular breaks is crucial for maintaining focus. Short breaks, such as taking a walk or doing some light stretching, can help refresh your mind and prevent fatigue from building up.",
+    "depois": "Here are three tips to help you stay focused while studying:\n\n1. Set clear goals: Determine what you want to achieve and set specific, measurable objectives for your study sessions.\n\n2. Create a study schedule: Develop a detailed plan of action that outlines the timeframes for each session, including how much time you'll spend on each topic or assignment.\n\n3. Take breaks: Allow yourself to take regular breaks during study sessions to recharge and refocus. This can help prevent burnout and improve overall productivity."
+  }
+]
