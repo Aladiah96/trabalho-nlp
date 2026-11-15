@@ -1,0 +1,702 @@
+% Apresentação: Adaptação eficiente com LoRA e QLoRA
+% Compilar com:  latexmk -pdf apresentacao.tex   (dentro de slides/)
+% Números: artigos em docs/referencias.md e medições em results/ (Colab T4, 15/11/2026).
+
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[sfdefault,lining]{FiraSans}
+\usepackage[varqu]{inconsolata}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.geometric,arrows.meta,calc,fit}
+\usepackage{fontawesome5}
+
+\graphicspath{{../results/}}
+\usetheme[progressbar=frametitle,numbering=fraction,block=fill]{metropolis}
+
+% ---------------------------------------------------------------------------
+% Cores
+\definecolor{fundo}{HTML}{23373B}
+\definecolor{azul}{HTML}{2A78D6}
+\definecolor{laranja}{HTML}{EB6834}
+\definecolor{verde}{HTML}{1BAF7A}
+\definecolor{amarelo}{HTML}{EDA100}
+\definecolor{cinza}{HTML}{52514E}
+\definecolor{cinzaclaro}{HTML}{E4E3DF}
+\definecolor{codigofundo}{HTML}{F6F5F2}
+\setbeamercolor{alerted text}{fg=laranja}
+\setbeamercolor{progress bar}{fg=laranja, bg=cinzaclaro}
+\setbeamercolor{block title}{bg=cinzaclaro}
+\setbeamercolor{block body}{bg=codigofundo}
+
+\newcommand{\fonte}[1]{\par\vfill{\scriptsize\color{cinza}Fonte: #1}}
+\newcommand{\congelado}{\textcolor{azul}{\faLock}}
+\newcommand{\treinavel}{\textcolor{laranja}{\faFire}}
+
+% ---------------------------------------------------------------------------
+% Código
+\lstdefinestyle{py}{
+  language=Python,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{azul}\bfseries,
+  commentstyle=\color{cinza}\itshape,
+  stringstyle=\color{verde!70!black},
+  backgroundcolor=\color{codigofundo},
+  frame=none, xleftmargin=4pt, xrightmargin=4pt,
+  aboveskip=2pt, belowskip=2pt,
+  showstringspaces=false, columns=fullflexible, keepspaces=true,
+  upquote=true,
+  morecomment=[s][\color{laranja}\bfseries]{\#\ [}{]},
+  literate=
+    {á}{{\'a}}1 {à}{{\`a}}1 {ã}{{\~a}}1 {â}{{\^a}}1
+    {é}{{\'e}}1 {ê}{{\^e}}1 {í}{{\'i}}1 {ó}{{\'o}}1
+    {õ}{{\~o}}1 {ô}{{\^o}}1 {ú}{{\'u}}1 {ç}{{\c c}}1
+    {Ç}{{\c C}}1 {Ã}{{\~A}}1 {Â}{{\^A}}1 {É}{{\'E}}1
+    {Á}{{\'A}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {·}{{$\cdot$}}1 {→}{{$\to$}}2 {≈}{{$\approx$}}1 {Δ}{{$\Delta$}}1 {α}{{$\alpha$}}1,
+}
+\lstdefinestyle{saida}{
+  style=py, language={}, keywordstyle={}, stringstyle={}, commentstyle={},
+  basicstyle=\ttfamily\scriptsize,
+}
+\lstset{style=py}
+
+% ---------------------------------------------------------------------------
+\title{Adaptação eficiente com LoRA e QLoRA}
+\subtitle{Fine-tuning de LLMs em uma GPU comum}
+\author{Wagner Aladiah Pacheco de Almeida}
+\institute{Processamento de Linguagem Natural}
+\date{} % preencher com a data da apresentação
+
+\begin{document}
+
+% ===========================================================================
+% BLOCO 1: abertura e motivação (2 min)
+% ===========================================================================
+\maketitle
+
+\begin{frame}{Por que não treinar tudo?}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      Fine-tuning completo com Adam e precisão mista:
+      \medskip
+
+      \begin{tabular}{@{}lr@{}}
+        \toprule
+        Item & Bytes/parâmetro \\
+        \midrule
+        Pesos (fp16) & 2 \\
+        Gradientes (fp16) & 2 \\
+        Cópia mestre (fp32) & 4 \\
+        Estados do Adam (fp32) & 8 \\
+        \midrule
+        \textbf{Total} & \textbf{$\approx$16} \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      Modelo de 7B parâmetros:
+      \[
+        7\times10^9 \times 16\ \text{B} \approx \alert{\textbf{112 GB}}
+      \]
+      \vspace{-0.5em}
+      \begin{itemize}
+        \item sem contar ativações
+        \item várias GPUs de datacenter
+        \item uma cópia inteira (14 GB) por tarefa
+      \end{itemize}
+      \medskip
+      \centering\colorbox{laranja!12}{\parbox{0.9\linewidth}{\centering\strut Como adaptar esse modelo numa GPU de \textbf{16 GB}?}}
+    \end{column}
+  \end{columns}
+  \fonte{Rajbhandari et al., ZeRO (2019).}
+\end{frame}
+
+% ===========================================================================
+% BLOCO 2: LoRA (5 min)
+% ===========================================================================
+\section{LoRA}
+
+\begin{frame}{A hipótese do posto baixo}
+  \begin{itemize}
+    \item Fine-tuning aprende uma mudança nos pesos: $W = W_0 + \Delta W$.
+    \item Modelos pré-treinados têm \alert{dimensão intrínseca baixa}: poucas direções bastam para adaptar a uma tarefa.
+    \item Hipótese do LoRA: $\Delta W$ também tem \alert{posto baixo}.
+  \end{itemize}
+  \bigskip
+  \begin{center}
+    \begin{tikzpicture}[every node/.style={font=\small}]
+      \node[draw=cinza, fill=cinzaclaro, minimum width=2.4cm, minimum height=2.4cm] (dw) {$\Delta W$};
+      \node[below=2pt of dw, font=\scriptsize, text=cinza] {$d \times k$};
+      \node[right=0.6cm of dw, font=\Large] (aprox) {$\approx$};
+      \node[draw=laranja, fill=laranja!20, minimum width=0.45cm, minimum height=2.4cm, right=0.6cm of aprox] (b) {$B$};
+      \node[below=2pt of b, font=\scriptsize, text=cinza] {$d \times r$};
+      \node[right=0.2cm of b] (vezes) {$\cdot$};
+      \node[draw=laranja, fill=laranja!20, minimum width=2.4cm, minimum height=0.45cm, right=0.2cm of vezes] (a) {$A$};
+      \node[below=2pt of a, font=\scriptsize, text=cinza] {$r \times k$};
+      \node[right=0.8cm of a, align=left, text=cinza] {$r \ll \min(d, k)$};
+    \end{tikzpicture}
+  \end{center}
+  \fonte{Aghajanyan et al. (2020); Hu et al., LoRA (2021).}
+\end{frame}
+
+\begin{frame}{LoRA: um caminho treinável em paralelo}
+  \begin{columns}[c]
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}[
+          every node/.style={font=\small},
+          seta/.style={-{Stealth[length=2mm]}, thick, cinza}]
+        \node (x) at (0,0) {$x$};
+        \node[draw=azul, fill=azul!15, minimum width=2.2cm, minimum height=1.6cm, align=center]
+             (w0) at (-1.6,1.9) {$W_0$\\[-2pt]{\scriptsize congelado \congelado}};
+        \node[trapezium, trapezium angle=65, draw=laranja, fill=laranja!20,
+              minimum width=1.9cm, minimum height=0.55cm, shape border rotate=180]
+             (a) at (1.5,1.2) {$A$};
+        \node[trapezium, trapezium angle=65, draw=laranja, fill=laranja!20,
+              minimum width=1.9cm, minimum height=0.55cm]
+             (b) at (1.5,2.6) {$B$};
+        \node[right=1pt of a, font=\scriptsize, text=cinza] {$k \to r$};
+        \node[right=1pt of b, font=\scriptsize, text=cinza] {$r \to d$};
+        \node[draw, circle, inner sep=1pt] (soma) at (0,3.8) {$+$};
+        \node (h) at (0,4.7) {$h$};
+        \draw[seta] (x) -| (w0);
+        \draw[seta] (x) -| (a);
+        \draw[seta] (a) -- (b);
+        \draw[seta] (w0) |- (soma);
+        \draw[seta] (b) |- node[pos=0.25, right, font=\scriptsize] {$\times \frac{\alpha}{r}$} (soma);
+        \draw[seta] (soma) -- (h);
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \[
+        h = W_0 x + \frac{\alpha}{r}\, B A x
+      \]
+      \begin{itemize}
+        \item $W_0$ \congelado: não recebe gradiente nem estado do otimizador.
+        \item $A, B$ \treinavel: as únicas matrizes treinadas.
+        \item O mesmo $x$ passa pelos dois caminhos, e as saídas se somam.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \fonte{Hu et al., LoRA (2021).}
+\end{frame}
+
+\begin{frame}{Quantos parâmetros?}
+  Por camada adaptada: \alert{$r \cdot (d + k)$} em vez de $d \cdot k$.
+  \bigskip
+
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      Exemplo: $d = k = 4096$, $r = 8$
+      \medskip
+
+      \begin{tabular}{@{}lr@{}}
+        \toprule
+        Matriz completa & $4096 \times 4096 = 16.777.216$ \\
+        LoRA & $8 \times (4096 + 4096) = 65.536$ \\
+        \midrule
+        \textbf{Fração} & \textbf{\alert{0,39\%}} \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \begin{itemize}
+        \item O custo cresce \alert{linearmente} com $r$.
+        \item Com $r$ pequeno, o adaptador é uma fração mínima da camada.
+        \item Gradientes e estados do Adam existem só para $A$ e $B$.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Detalhes que importam}
+  \begin{itemize}
+    \item \textbf{Inicialização:} $A$ aleatória, \alert{$B = 0$}. No passo 0, $\Delta W = 0$, então o modelo começa idêntico ao original.
+    \item \textbf{Escala $\alpha / r$:} \texttt{lora\_alpha} controla o tamanho da atualização. Mudar $r$ sem mexer em $\alpha$ muda a escala.
+    \item \textbf{Onde aplicar (\texttt{target\_modules}):} o artigo usou $W_q$ e $W_v$; hoje é comum usar todas as lineares (q, k, v, o, gate, up, down).
+    \item \textbf{Inferência:} dá para \alert{fundir} os pesos, $W = W_0 + \frac{\alpha}{r} BA$. O modelo fica do mesmo tamanho e sem latência extra.
+    \item Ou manter adaptadores separados, de poucos MB, e trocar por tarefa.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{LoRA: resultados do artigo}
+  \begin{columns}[c]
+    \begin{column}{0.32\textwidth}
+      \centering
+      {\fontsize{36}{40}\selectfont\color{laranja}\textbf{10.000$\times$}}\par
+      \smallskip menos parâmetros treináveis\par{\scriptsize\color{cinza}(GPT-3 175B)}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      {\fontsize{36}{40}\selectfont\color{laranja}\textbf{3$\times$}}\par
+      \smallskip menos memória de GPU\par{\scriptsize\color{cinza}(GPT-3 175B)}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      {\fontsize{36}{40}\selectfont\color{laranja}\textbf{0}}\par
+      \smallskip latência extra na inferência\par{\scriptsize\color{cinza}(pesos fundidos)}
+    \end{column}
+  \end{columns}
+  \bigskip
+  \begin{center}
+    Qualidade igual ou melhor que o fine-tuning completo em RoBERTa, DeBERTa, GPT-2 e GPT-3.
+  \end{center}
+  \fonte{Hu et al., LoRA (2021).}
+\end{frame}
+
+% ===========================================================================
+% BLOCO 3: QLoRA (4 min)
+% ===========================================================================
+\section{QLoRA}
+
+\begin{frame}{QLoRA: congelar e também comprimir}
+  \begin{columns}[c]
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+        \item Com LoRA, $W_0$ ainda ocupa 16 bits: 7B $\to$ 14 GB.
+        \item QLoRA \alert{quantiza o modelo base para 4 bits} e treina LoRA em 16 bits por cima.
+        \item No forward, cada bloco é dequantizado na hora; o gradiente atravessa $W_0$ até chegar em $A$ e $B$.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      {\small Memória de pesos e otimizador, modelo de 7B}\par\medskip
+      \begin{tikzpicture}[x=0.032cm, y=0.55cm, every node/.style={font=\small}]
+        \foreach \y/\rot/\val/\txt/\cor in {
+            2/Full FT/112/$\approx$112 GB/cinza,
+            1/LoRA/14/$\approx$14 GB/azul,
+            0/QLoRA/3.5/{$\approx$3{,}5 GB}/laranja} {
+          \node[anchor=east] at (-2,\y) {\rot};
+          \fill[\cor] (0,\y-0.32) rectangle (\val,\y+0.32);
+          \node[anchor=west] at (\val+2,\y) {\txt};
+        }
+      \end{tikzpicture}
+      \par\smallskip
+      {\scriptsize\color{cinza}Sem ativações. LoRA: $7\times10^9 \times 2$ B; QLoRA: $\times 0{,}5$ B.}
+    \end{column}
+  \end{columns}
+  \fonte{Dettmers et al., QLoRA (2023); conta de bytes por parâmetro de \emph{fundamentos.md}.}
+\end{frame}
+
+\begin{frame}{NF4 e double quantization}
+  \small
+  \begin{block}{NF4: 4-bit NormalFloat}
+    \begin{itemize}
+      \item Pesos de redes treinadas seguem uma distribuição \alert{aproximadamente normal}.
+      \item Os 16 níveis do NF4 vêm dos \alert{quantis da normal}: cada nível é usado com a mesma frequência.
+      \item Quantização em blocos de 64 pesos, cada um com sua constante de escala.
+    \end{itemize}
+  \end{block}
+  \begin{block}{Double quantization}
+    \begin{itemize}
+      \item As constantes de escala também são quantizadas (8 bits).
+      \item O custo delas cai de $\approx$0,5 para \alert{$\approx$0,127 bit/parâmetro}, cerca de 3 GB a menos num modelo de 65B.
+    \end{itemize}
+  \end{block}
+  \fonte{Dettmers et al., QLoRA (2023).}
+\end{frame}
+
+\begin{frame}{Paged optimizers e compute dtype}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Paged optimizers}
+        \begin{itemize}
+          \item Usam a memória unificada da NVIDIA.
+          \item Quando a GPU enche (picos com sequências longas), os estados do otimizador vão para a RAM da CPU.
+          \item Evitam OOM sem parar o treino.
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Compute dtype}
+        \begin{itemize}
+          \item \alert{Armazenamento} em NF4, \alert{cálculo} em 16 bits.
+          \item Cada bloco é dequantizado para bf16/fp16 na hora da multiplicação.
+          \item Custo: mais trabalho por passo.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bigskip
+  \centering QLoRA troca \alert{tempo de computação} por \alert{memória}.
+  \fonte{Dettmers et al., QLoRA (2023).}
+\end{frame}
+
+\begin{frame}{QLoRA: resultados do artigo}
+  \begin{columns}[c]
+    \begin{column}{0.32\textwidth}
+      \centering
+      {\fontsize{32}{36}\selectfont\color{laranja}\textbf{65B}}\par
+      \smallskip ajustado em \textbf{uma} GPU de 48 GB
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      {\fontsize{32}{36}\selectfont\color{laranja}\textbf{99,3\%}}\par
+      \smallskip do nível do ChatGPT no benchmark Vicuna (Guanaco)
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      {\fontsize{32}{36}\selectfont\color{laranja}\textbf{24 h}}\par
+      \smallskip de treino em uma única GPU
+    \end{column}
+  \end{columns}
+  \bigskip
+  \begin{center}
+    Qualidade equivalente ao fine-tuning completo em 16 bits,\\
+    \alert{desde que o LoRA seja aplicado em todas as camadas lineares.}
+  \end{center}
+  \fonte{Dettmers et al., QLoRA (2023).}
+\end{frame}
+
+% ===========================================================================
+% BLOCO 4: análise do código (6 min)
+% ===========================================================================
+\section{Análise do código}
+
+\begin{frame}{O exemplo}
+  \begin{center}
+    \begin{tikzpicture}[
+        etapa/.style={draw=cinza, fill=codigofundo, rounded corners=3pt,
+                      minimum height=1.1cm, text width=2.15cm, align=center, font=\small},
+        seta/.style={-{Stealth[length=2mm]}, thick, cinza}]
+      \node[etapa, draw=laranja, fill=laranja!12] (q) {Carregar em 4 bits\\{\scriptsize\color{laranja}[QUANTIZAÇÃO]}};
+      \node[etapa, right=0.45cm of q] (p) {Preparar para treino};
+      \node[etapa, draw=laranja, fill=laranja!12, right=0.45cm of p] (l) {Adicionar LoRA\\{\scriptsize\color{laranja}[ADAPTADORES]}};
+      \node[etapa, draw=laranja, fill=laranja!12, right=0.45cm of l] (c) {Contar\\{\scriptsize\color{laranja}[PARÂM. TREINÁVEIS]}};
+      \node[etapa, right=0.45cm of c] (t) {Treinar e salvar adaptador};
+      \foreach \a/\b in {q/p, p/l, l/c, c/t} \draw[seta] (\a) -- (\b);
+    \end{tikzpicture}
+  \end{center}
+  \medskip
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+        \item \textbf{Modelo:} Qwen2.5-0.5B-Instruct
+        \item \textbf{Dados:} openassistant-guanaco (o do artigo), 800 exemplos de treino e 100 de avaliação
+        \item \textbf{GPU:} Tesla T4 (Colab grátis)
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      \begin{itemize}
+        \item \textbf{Stack:} \texttt{transformers}, \texttt{peft}, \texttt{bitsandbytes}, \texttt{trl}
+        \item 100 passos, batch 16, $\approx$2 épocas
+        \item 4 execuções: LoRA r=16 e QLoRA r=4/16/64
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \fonte{\texttt{code/lora\_qlora.py}; resultados em \texttt{results/}.}
+\end{frame}
+
+\begin{frame}[fragile]{\textcolor{laranja}{[QUANTIZAÇÃO]} Configuração do bitsandbytes}
+  \begin{columns}[T]
+    \begin{column}{0.58\textwidth}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+# [QUANTIZAÇÃO]
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,         # base em 4 bits
+    bnb_4bit_quant_type="nf4", # NormalFloat 4
+    bnb_4bit_use_double_quant=True,
+    # T4 não tem bf16:
+    bnb_4bit_compute_dtype=torch.float16,
+)
+model = AutoModelForCausalLM.from_pretrained(
+    MODELO_ID, quantization_config=bnb_config)
+
+# [QUANTIZAÇÃO] congela a base, normalizações
+# em fp32, liga o gradient checkpointing
+model = prepare_model_for_kbit_training(model)
+\end{lstlisting}
+    \end{column}
+    \begin{column}{0.37\textwidth}
+      \small
+      Memória dos pesos (medida):\par\medskip
+      \begin{tabular}{@{}lr@{}}
+        \toprule
+        fp16 & 0,99 GB \\
+        NF4 & 0,45 GB \\
+        \midrule
+        \textbf{Redução} & \textbf{\alert{2,19$\times$}} \\
+        \bottomrule
+      \end{tabular}
+      \medskip
+
+      Por que não 4$\times$? Só as \alert{lineares} vão para 4 bits. As embeddings (136M parâmetros) continuam em 16 bits, e num modelo de 0,5B elas pesam muito.
+    \end{column}
+  \end{columns}
+  \fonte{\texttt{results/memoria\_modelo.json}.}
+\end{frame}
+
+\begin{frame}[fragile]{\textcolor{laranja}{[ADAPTADORES]} LoraConfig e o modelo adaptado}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+\begin{lstlisting}
+# [ADAPTADORES]
+lora_config = LoraConfig(
+    r=16,               # posto de A e B
+    lora_alpha=32,      # escala α/r = 2
+    lora_dropout=0.05,
+    target_modules=["q_proj", "k_proj",
+        "v_proj", "o_proj", "gate_proj",
+        "up_proj", "down_proj"],
+    task_type="CAUSAL_LM",
+)
+model = get_peft_model(model, lora_config)
+\end{lstlisting}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+\begin{lstlisting}[style=saida]
+(q_proj): lora.Linear4bit(
+  (base_layer): Linear4bit(
+      in_features=896, out_features=896)
+  (lora_A): ModuleDict((default): Linear(
+      in_features=896, out_features=16))
+  (lora_B): ModuleDict((default): Linear(
+      in_features=16, out_features=896))
+)
+\end{lstlisting}
+      \small
+      \begin{itemize}
+        \item \texttt{base\_layer}: \texttt{Linear4bit}, quantizada \congelado
+        \item \texttt{lora\_A}, \texttt{lora\_B}: lineares comuns \treinavel
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \fonte{\texttt{results/qlora\_r16/modelo\_print.txt} (trecho).}
+\end{frame}
+
+\begin{frame}[fragile]{\textcolor{laranja}{[PARÂMETROS TREINÁVEIS]} De onde vem o número}
+\begin{lstlisting}[style=saida]
+trainable params: 8,798,208 || all params: 502,830,976 || trainable%: 1.7497
+\end{lstlisting}
+  \vspace{-0.3em}
+  \begin{columns}[T]
+    \begin{column}{0.56\textwidth}
+      \small
+      Por camada do transformer, $r = 16$:\par\smallskip
+      \begin{tabular}{@{}lccr@{}}
+        \toprule
+        Módulo & $k \to d$ & $r(d+k)$ & \\
+        \midrule
+        q\_proj, o\_proj & $896 \to 896$ & 28.672 & $\times 2$ \\
+        k\_proj, v\_proj & $896 \to 128$ & 16.384 & $\times 2$ \\
+        gate, up, down & $896 \leftrightarrow 4864$ & 92.160 & $\times 3$ \\
+        \midrule
+        \multicolumn{2}{@{}l}{Por camada} & 366.592 & \\
+        \multicolumn{2}{@{}l}{$\times$ 24 camadas} & \alert{\textbf{8.798.208}} & \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.41\textwidth}
+      \small
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+# [PARÂMETROS TREINÁVEIS]
+model.print_trainable_parameters()
+sum(p.numel() for p in
+    model.parameters()
+    if p.requires_grad)
+\end{lstlisting}
+      \begin{itemize}
+        \item As três contagens batem.
+        \item Os 336 tensores treináveis são todos \texttt{lora\_A}/\texttt{lora\_B}.
+        \item k e v saem com 128 (GQA): $d \neq k$.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \fonte{\texttt{results/qlora\_r16/parametros.txt}.}
+\end{frame}
+
+\begin{frame}[fragile]{Treino e salvamento}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+\begin{lstlisting}
+training_args = SFTConfig(
+    per_device_train_batch_size=4,
+    gradient_accumulation_steps=4,
+    learning_rate=2e-4,
+    max_steps=100,
+    optim="paged_adamw_8bit",  # QLoRA
+    fp16=True,                 # T4: sem bf16
+)
+trainer = SFTTrainer(model=model,
+    args=training_args, train_dataset=...)
+trainer.train()
+model.save_pretrained("adaptador")  # só A e B
+\end{lstlisting}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \small
+      \begin{tabular}{@{}lr@{}}
+        \toprule
+        Arquivo & Tamanho \\
+        \midrule
+        Modelo base (fp16) & 988 MB \\
+        Adaptador r=4 & 8,9 MB \\
+        Adaptador r=16 & 35,2 MB \\
+        Adaptador r=64 & 140,8 MB \\
+        \bottomrule
+      \end{tabular}
+      \medskip
+
+      \textbf{Pegadinha:} o \texttt{trl} converte os adaptadores para bf16 em modelos quantizados, mas a T4 não tem bf16. Foi preciso voltá-los para fp32.
+    \end{column}
+  \end{columns}
+  \fonte{\texttt{results/*/metricas.json}; adaptadores salvos em fp32.}
+\end{frame}
+
+% ===========================================================================
+% BLOCO 5: exemplo e aplicações (4 min)
+% ===========================================================================
+\section{Exemplo e aplicações}
+
+\begin{frame}{Resultado: curvas de perda}
+  \centering
+  \includegraphics[width=\textwidth]{curva_perda.png}
+  \par\smallskip
+  {\small Base NF4 começa \alert{pior} (1,903 × 1,807). O r=64 decora o treino na 2ª época e a perda de avaliação \alert{sobe}.}
+  \fonte{\texttt{results/curva\_perda.png}; perda de avaliação em 100 exemplos do split \emph{test}.}
+\end{frame}
+
+\begin{frame}{Resultado: antes × depois}
+  \small
+  \textbf{Pergunta:} ``Escreva um e-mail curto pedindo para remarcar uma reunião.''
+  \medskip
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{QLoRA, antes (base em NF4)}
+        \footnotesize
+        ``Estou escrevendo este email para você para \alert{solicitar sua presença na reunião} que está programada para às 15h de hoje.''
+      \end{block}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{QLoRA r=16, depois de 100 passos}
+        \footnotesize
+        ``Estou escrevendo este email para pedir que você me realize um \textcolor{verde!70!black}{\textbf{pedido de remarcação}} para minha próxima reunião.''
+      \end{block}
+    \end{column}
+  \end{columns}
+  \medskip
+  \begin{itemize}
+    \item O modelo em fp16 entendia o pedido; em NF4, \alert{deixou de entender}. O fine-tuning recuperou.
+    \item Nas outras perguntas a mudança é de estilo. O Qwen-Instruct já responde bem.
+  \end{itemize}
+  \fonte{\texttt{results/qlora\_r16/respostas.json} e \texttt{results/lora16/respostas.json} (geração gulosa).}
+\end{frame}
+
+\begin{frame}{Aplicações}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{itemize}
+        \item \textbf{Assistente de domínio:} jurídico, médico, documentação interna. Roda em GPU própria, e os dados não saem da empresa.
+        \item \textbf{Idioma e estilo:} português, tom formal, saída em JSON.
+        \item \textbf{Tarefas clássicas de NLP:} sentimento, NER, sumarização, com um adaptador por tarefa.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{itemize}
+        \item \textbf{Vários adaptadores, um modelo:} a base fica carregada uma vez, e adaptadores de MB são trocados por cliente ou por tarefa.
+        \item \textbf{Difusão:} LoRA em Stable Diffusion ensina um estilo ou personagem com poucas imagens.
+        \item \textbf{Pesquisa com pouco recurso:} Guanaco, em uma GPU e 24 h.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ===========================================================================
+% BLOCO 6: compromissos, vantagens e limitações (3 min)
+% ===========================================================================
+\section{Compromissos}
+
+\begin{frame}{Qualidade × memória × custo: o que medimos}
+  \scriptsize
+  \centering
+  \begin{tabular}{@{}lrrrcr@{}}
+    \toprule
+    Configuração & \% treinável & Pico mem. & s/passo & eval\_loss & Adaptador \\
+    \midrule
+    LoRA, base fp16, r=16 & 1,75\% & 1,51 GB & 2,64 & 1,807 $\to$ \textbf{1,768} & 35 MB \\
+    QLoRA, base NF4, r=16 & 1,75\% & 1,33 GB & 3,48 & 1,903 $\to$ 1,842 & 35 MB \\
+    QLoRA, r=4 & 0,44\% & \textbf{1,27 GB} & 3,49 & 1,903 $\to$ 1,839 & 9 MB \\
+    QLoRA, r=64 & 6,65\% & 1,60 GB & 3,53 & 1,903 $\to$ 1,891 & 141 MB \\
+    \bottomrule
+  \end{tabular}
+  \par\smallskip
+  \raggedright\footnotesize
+  \begin{itemize}
+    \item \textbf{Qualidade:} NF4 piora a base em $\approx$5\%. Num modelo de 0,5B isso aparece; o artigo (7B--65B) não vê essa perda.
+    \item \textbf{Tempo:} QLoRA é $\approx$32\% mais lento por passo (dequantização).
+    \item \textbf{Memória:} só $-$12\% aqui, porque num modelo pequeno a parte quantizável é pequena. Num 7B, $\approx$4$\times$ nos pesos.
+    \item \textbf{Posto:} r=4 iguala r=16; r=64 sobreajusta. Mais parâmetros $\neq$ mais qualidade.
+  \end{itemize}
+  \fonte{\texttt{results/tabela\_resultados.md}; Tesla T4, 15/11/2026.}
+\end{frame}
+
+\begin{frame}{Vantagens e limitações}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{\textcolor{verde!70!black}{Vantagens}}
+      \footnotesize
+      \begin{itemize}
+        \item Treina uma fração pequena dos parâmetros: $<$1\% num modelo de 7B; 0,44--6,65\% no nosso 0,5B.
+        \item Memória muito menor; QLoRA treina modelos grandes em uma GPU.
+        \item Adaptadores de MB, fáceis de guardar e versionar.
+        \item Vários adaptadores sobre um mesmo modelo base.
+        \item Sem latência extra com os pesos fundidos; a base continua intacta.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{\textcolor{laranja}{Limitações}}
+      \footnotesize
+      \begin{itemize}
+        \item O posto baixo limita mudanças grandes (domínio ou idioma novo).
+        \item Mais hiperparâmetros: $r$, $\alpha$, \texttt{target\_modules}, taxa de aprendizado.
+        \item QLoRA: mais lento por passo e perda pela quantização, maior em modelos pequenos.
+        \item Fundir em 4 bits perde precisão; o certo é fundir sobre a base em 16 bits.
+        \item \texttt{bitsandbytes}: foco em GPUs NVIDIA.
+        \item Fine-tuning não substitui RAG para fatos que mudam.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ===========================================================================
+% BLOCO 7: conclusão (1 min)
+% ===========================================================================
+\section{Conclusão}
+
+\begin{frame}{Em três frases}
+  \vfill
+  \begin{enumerate}
+    \setlength{\itemsep}{1.2em}
+    \item \textbf{LoRA reduz o que é treinado:} só $A$ e $B$, de posto baixo, com $W_0$ congelado.
+    \item \textbf{QLoRA reduz o que é guardado:} a base em NF4, trocando tempo por memória.
+    \item \textbf{Juntos, levam o fine-tuning de LLMs para uma GPU comum}, desde que se escolha bem o posto e se aceite o custo da quantização.
+  \end{enumerate}
+  \vfill
+\end{frame}
+
+\begin{frame}[standout]
+  Perguntas?
+  \par\bigskip
+  {\normalsize Código e resultados: \texttt{github.com/Aladiah96/trabalho-nlp}}
+\end{frame}
+
+\begin{frame}{Referências}
+  \scriptsize
+  \begin{enumerate}
+    \item HU, E. J. et al. \textbf{LoRA: Low-Rank Adaptation of Large Language Models.} ICLR 2022. arXiv:2106.09685.
+    \item DETTMERS, T. et al. \textbf{QLoRA: Efficient Finetuning of Quantized LLMs.} NeurIPS 2023. arXiv:2305.14314.
+    \item DETTMERS, T. et al. \textbf{LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale.} arXiv:2208.07339, 2022.
+    \item AGHAJANYAN, A. et al. \textbf{Intrinsic Dimensionality Explains the Effectiveness of Language Model Fine-Tuning.} arXiv:2012.13255, 2020.
+    \item RAJBHANDARI, S. et al. \textbf{ZeRO: Memory Optimizations Toward Training Trillion Parameter Models.} arXiv:1910.02054, 2019.
+    \item Hugging Face. Documentação de PEFT, TRL e bitsandbytes. \texttt{huggingface.co/docs}.
+    \item Modelo \texttt{Qwen/Qwen2.5-0.5B-Instruct} e dataset \texttt{timdettmers/openassistant-guanaco}, Hugging Face Hub.
+  \end{enumerate}
+\end{frame}
+
+\end{document}

@@ -14,9 +14,12 @@ Enunciado do professor decomposto em itens que dá para conferir antes da entreg
 | R8 | Compromissos e vantagens/limitações | Tabela qualidade × memória × custo (full FT × LoRA × QLoRA) e listas de vantagens e limitações. |
 | R9 | Duração ≤ 25 min | Ensaio cronometrado abaixo de 25 min, deixando margem para perguntas, se o professor quiser. |
 
+## Decisões
+
+- Slides em LaTeX Beamer (`slides/apresentacao.tex`), exportados em PDF.
+- Trabalho individual.
+- As perguntas não contam dentro dos 25 minutos.
+
 ## Pontos ainda em aberto
 
-- Formato dos slides (PowerPoint, Google Slides, LaTeX Beamer etc.).
-- Trabalho individual ou em grupo e, se for em grupo, quem apresenta cada bloco.
-- Data da apresentação.
-- Se as perguntas contam dentro dos 25 minutos.
+- Data da apresentação (preencher `\date{}` em `slides/apresentacao.tex`).

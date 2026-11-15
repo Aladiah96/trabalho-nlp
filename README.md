@@ -51,7 +51,7 @@ trabalho-nlp/
 │   ├── notebook_colab.ipynb      # roda tudo no Colab (T4)
 │   └── requirements.txt          # versões fixadas
 ├── results/                      # métricas, logs, prints e curva de perda (Colab T4)
-└── slides/                       # (a criar) arquivo da apresentação
+└── slides/                       # apresentacao.tex (Beamer) e apresentacao.pdf
 ```
 
 ## Próximos passos
@@ -60,5 +60,5 @@ trabalho-nlp/
 - [x] Escrever o código em `code/` (testado em CPU com `--teste-cpu`).
 - [x] Rodar `code/notebook_colab.ipynb` no Colab (T4) e copiar `results/` para o repositório.
 - [x] Preencher a tabela de resultados em [docs/exemplos-e-tradeoffs.md](docs/exemplos-e-tradeoffs.md).
-- [ ] Montar os slides seguindo [docs/roteiro-apresentacao.md](docs/roteiro-apresentacao.md).
+- [x] Montar os slides seguindo [docs/roteiro-apresentacao.md](docs/roteiro-apresentacao.md).
 - [ ] Ensaiar e cronometrar (máximo de 25 min).

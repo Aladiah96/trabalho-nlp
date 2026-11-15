@@ -1,6 +1,6 @@
 # Roteiro da apresentação
 
-Limite: **25 minutos**. O roteiro abaixo usa os 25. Se as perguntas contarem dentro do tempo, cortar 1 minuto do bloco 4 e 1 do bloco 6.
+Limite: **25 minutos**, sem contar as perguntas. Apresentação individual. Slides em LaTeX Beamer: `slides/apresentacao.tex` → `slides/apresentacao.pdf`.
 
 | Bloco | Conteúdo | Tempo | Acumulado | Base |
 |---|---|---|---|---|
@@ -8,11 +8,11 @@ Limite: **25 minutos**. O roteiro abaixo usa os 25. Se as perguntas contarem den
 | 2 | LoRA | 5 min | 7 | [fundamentos.md §2](fundamentos.md) |
 | 3 | QLoRA | 4 min | 11 | [fundamentos.md §3](fundamentos.md) |
 | 4 | Análise do código | 6 min | 17 | [analise-codigo.md](analise-codigo.md) |
-| 5 | Exemplo e aplicações | 3 min | 20 | [analise-codigo.md](analise-codigo.md), [exemplos-e-tradeoffs.md](exemplos-e-tradeoffs.md) |
-| 6 | Compromissos, vantagens e limitações | 3 min | 23 | [exemplos-e-tradeoffs.md](exemplos-e-tradeoffs.md) |
-| 7 | Conclusão e perguntas | 2 min | 25 | — |
+| 5 | Exemplo e aplicações | 4 min | 21 | [analise-codigo.md](analise-codigo.md), [exemplos-e-tradeoffs.md](exemplos-e-tradeoffs.md) |
+| 6 | Compromissos, vantagens e limitações | 3 min | 24 | [exemplos-e-tradeoffs.md](exemplos-e-tradeoffs.md) |
+| 7 | Conclusão | 1 min | 25 | — |
 
-22 slides, pouco mais de 1 min por slide em média.
+23 slides de conteúdo (mais capa, divisórias de seção e referências), pouco mais de 1 min por slide. As perguntas ficam depois dos 25 min.
 
 ## Slides
 
@@ -40,17 +40,18 @@ Limite: **25 minutos**. O roteiro abaixo usa os 25. Se as perguntas contarem den
 15. **[PARÂMETROS TREINÁVEIS]** saída de `print_trainable_parameters()` e conferência da conta.
 16. **Treino e salvamento:** `SFTConfig` (`paged_adamw_8bit`), tamanho do adaptador salvo.
 
-### Bloco 5: Exemplo e aplicações (3 min)
-17. **Resultado do exemplo:** curva de perda; respostas antes × depois.
+### Bloco 5: Exemplo e aplicações (4 min)
+17. **Curvas de perda:** treino e avaliação das 4 configurações.
+17b. **Antes × depois:** o e-mail de remarcação (base NF4 erra o pedido; depois do QLoRA acerta).
 18. **Aplicações:** assistente de domínio, idioma/estilo, vários adaptadores num modelo base, difusão.
 
 ### Bloco 6: Compromissos, vantagens e limitações (3 min)
 19. **Tabela qualidade × memória × custo** com os números medidos (tabela de [exemplos-e-tradeoffs.md](exemplos-e-tradeoffs.md)).
 20. **Vantagens e limitações** em duas colunas.
 
-### Bloco 7: Conclusão (2 min)
+### Bloco 7: Conclusão (1 min)
 21. **Resumo em três frases:** LoRA reduz o que é treinado; QLoRA reduz o que é guardado; os dois juntos levam fine-tuning de LLM para uma GPU comum.
-22. **Referências e perguntas.**
+22. **Perguntas** (fora dos 25 min) e referências.
 
 ## Checklist antes de apresentar
 

@@ -30,4 +30,4 @@ Contexto e regras para trabalhar neste repositório.
 - Referências: `docs/referencias.md`
 - Código: `code/` (`lora_qlora.py`, `gerar_figuras.py`, `notebook_colab.ipynb`)
 - Resultados (gerados no Colab): `results/`
-- Slides (a criar): `slides/`
+- Slides: `slides/apresentacao.tex` (Beamer; compilar com `latexmk -pdf` dentro de `slides/`)

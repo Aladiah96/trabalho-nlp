@@ -12,3 +12,15 @@ results/*/checkpoints/
 results/*/adaptador/*.safetensors
 results/*_teste_cpu/
 results.zip
+
+# LaTeX (o PDF final entra no repositório)
+slides/*.aux
+slides/*.log
+slides/*.nav
+slides/*.out
+slides/*.snm
+slides/*.toc
+slides/*.vrb
+slides/*.fls
+slides/*.fdb_latexmk
+slides/*.synctex.gz
