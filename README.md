@@ -33,7 +33,18 @@ Detalhes e critérios de "pronto" em [docs/requisitos.md](docs/requisitos.md). O
 | R9 | Vantagens e limitações | `docs/aplicacoes-vantagens-limitacoes.md` | ☐ |
 | R10 | Duração máxima de 25 minutos | [docs/roteiro-apresentacao.md](docs/roteiro-apresentacao.md) | ☐ |
 
-Os arquivos em `code/` e os docs de conteúdo (`fundamentos.md`, `analise-codigo.md` etc.) ainda não existem. Eles serão criados nas fases seguintes do [planejamento](docs/planejamento.md).
+Os docs de análise (`analise-codigo.md` etc.) e a pasta `results/` ainda não existem. Eles serão criados nas fases seguintes do [planejamento](docs/planejamento.md).
+
+## Como rodar
+
+No Colab (GPU T4), abrir `code/notebook_colab.ipynb` e executar as células. Localmente, para testar o código em CPU com poucos exemplos:
+
+```bash
+uv venv --python 3.12 .venv
+uv pip install --python .venv/bin/python --index-url https://download.pytorch.org/whl/cpu torch
+uv pip install --python .venv/bin/python -r code/requirements.txt
+.venv/bin/python code/ajuste_fino.py e2 --rapido   # saídas em results_teste_cpu/
+```
 
 ## Estrutura do repositório
 
@@ -41,6 +52,10 @@ Os arquivos em `code/` e os docs de conteúdo (`fundamentos.md`, `analise-codigo
 trabalho-nlp/
 ├── README.md                    # este arquivo
 ├── CLAUDE.md                    # regras e contexto para sessões com o Claude Code
+├── code/
+│   ├── ajuste_fino.py           # experimentos E1–E6, com os blocos marcados
+│   ├── notebook_colab.ipynb     # roda tudo no Colab e gera results.zip
+│   └── requirements.txt
 └── docs/
     ├── requisitos.md            # enunciado quebrado em requisitos verificáveis
     ├── fundamentos.md           # teoria do ajuste fino (R1)

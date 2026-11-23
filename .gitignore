@@ -8,10 +8,13 @@ venv/
 .ipynb_checkpoints/
 
 # Saídas pesadas do treino (métricas, curvas e logs em results/ entram no repositório)
-results/**/checkpoint-*/
+results/**/checkpoints/
+results/**/modelo/
+results/**/tmp/
 results/**/*.safetensors
 results/**/*.bin
 results/**/*.pt
+results_teste_cpu/
 results.zip
 
 # LaTeX (o PDF final entra no repositório)

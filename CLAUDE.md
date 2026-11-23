@@ -32,4 +32,5 @@ Contexto e regras para trabalhar neste repositório.
 - Roteiro dos slides: `docs/roteiro-apresentacao.md`
 - Referências: `docs/referencias.md`
 - Fundamentos (teoria): `docs/fundamentos.md`
-- A criar: `docs/analise-codigo.md`, `docs/sobreajuste-generalizacao.md`, `docs/aplicacoes-vantagens-limitacoes.md`, `code/`, `results/`, `slides/` (Beamer; compilar com `latexmk -pdf` dentro de `slides/`)
+- Código: `code/ajuste_fino.py` (experimentos E1–E6; `--rapido` testa em CPU, saída em `results_teste_cpu/`, fora do git), `code/notebook_colab.ipynb`
+- A criar: `docs/analise-codigo.md`, `docs/sobreajuste-generalizacao.md`, `docs/aplicacoes-vantagens-limitacoes.md`, `code/gerar_figuras.py`, `results/`, `slides/` (Beamer; compilar com `latexmk -pdf` dentro de `slides/`)
