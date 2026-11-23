@@ -26,4 +26,7 @@ Toda afirmação numérica dos slides precisa vir de uma fonte desta lista ou de
 
 ## Datasets
 
-A definir (pendência P4 em `acompanhamento.md`).
+| Ref | Fonte | Uso previsto | Status |
+|---|---|---|---|
+| [8] | B2W-Reviews01: Real, Oshiro e Mafra, "B2W-Reviews01: An Open Product Reviews Corpus", STIL 2019. Hub: `ruanchaves/b2w-reviews01` (CC BY 4.0) | Dataset principal | a conferir |
+| [9] | IMDB em português, Hub: `maritaca-ai/imdb_pt` (licença não informada no card) | Avaliação fora do domínio | a conferir |

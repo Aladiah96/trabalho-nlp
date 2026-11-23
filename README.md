@@ -8,7 +8,7 @@ Trabalho da disciplina de NLP: apresentação de até 25 minutos sobre como adap
 >
 > Cada apresentação deve durar até 25 minutos, contemplando os fundamentos da técnica, a análise de um código pronto, exemplos de aplicação e uma discussão sobre suas vantagens e limitações.
 
-Premissa: o "método" é o **ajuste fino (fine-tuning) supervisionado de um modelo pré-treinado**. Ver [docs/planejamento.md](docs/planejamento.md).
+O método é o **ajuste fino (fine-tuning) supervisionado de um modelo pré-treinado**, em qualquer tarefa (confirmado pelo professor). Trabalho individual; apresentação na sexta-feira, 2026-11-27. Ver [docs/planejamento.md](docs/planejamento.md).
 
 ## Entregáveis
 

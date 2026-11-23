@@ -2,7 +2,7 @@
 
 ## Escopo
 
-**Premissa sobre o tema.** O enunciado não dá nome ao método. Pelos pedidos ("adaptação a uma tarefa", "preparação dos dados, treinamento e inferência", "sobreajuste e generalização"), o trabalho trata do **ajuste fino (fine-tuning) supervisionado de um modelo de linguagem pré-treinado para uma tarefa específica**. Essa leitura precisa ser confirmada com o professor (pendência P1 em `acompanhamento.md`).
+**Tema.** O trabalho trata do **ajuste fino (fine-tuning) supervisionado de um modelo de linguagem pré-treinado para uma tarefa específica**. A tarefa pode ser qualquer uma (confirmado pelo professor, P1). O trabalho é individual, a apresentação é na sexta-feira, 2026-11-27, e o código pode ser escrito por mim.
 
 **Entra:**
 - Fundamentos: transferência de aprendizado, pré-treino auto-supervisionado → ajuste fino supervisionado, cabeça de classificação, perda de entropia cruzada, ajuste fino completo × congelar camadas.
@@ -20,9 +20,22 @@
 | D1 | Stack | Hugging Face `transformers` (`Trainer`) + `datasets` + `evaluate` | É o padrão para código pronto de ajuste fino e mostra as três etapas de forma clara | Proposta |
 | D2 | Modelo | BERTimbau base (`neuralmind/bert-base-portuguese-cased`) | Modelo treinado em português, do tamanho do BERT base, cabe na T4 | Proposta |
 | D3 | Tarefa | Classificação de sentimento em pt-BR (positivo/negativo) | Fácil de explicar em pouco tempo; métricas simples; o resultado dá para entender olhando os exemplos | Proposta |
-| D4 | Dataset | A escolher: avaliações de produtos ou filmes em pt-BR, com um segundo domínio para testar a generalização | Ver pendência P4 | Em aberto |
+| D4 | Dataset | Principal: **B2W-Reviews01** (`ruanchaves/b2w-reviews01`), avaliações de produtos. Outro domínio: **IMDB em português** (`maritaca-ai/imdb_pt`), críticas de filmes | Os dois estão no Hub e são públicos, em pt-BR, com domínios diferentes (produto × filme), o que serve para o R7 | Proposta |
 | D5 | Ambiente | Colab com T4 (15 GB), resultados exportados para `results/` | GPU gratuita; sem demo ao vivo | Proposta |
 | D6 | Slides | LaTeX Beamer em `slides/` | Mesmo formato combinado para o curso | Proposta |
+
+### Datasets candidatos
+
+Verificado em 2026-11-23 pela API do Hugging Face.
+
+| Dataset | Conteúdo | Divisões | Licença | Como vira rótulo binário |
+|---|---|---|---|---|
+| `ruanchaves/b2w-reviews01` | 132.373 avaliações de produtos (texto, nota 1–5, `recommend_to_a_friend`, categoria) | Só `train`: a divisão treino/validação/teste fica no código, o que é bom para mostrar a preparação dos dados (R2) | CC BY 4.0 | Nota 1–2 → negativo, 4–5 → positivo, nota 3 descartada |
+| `maritaca-ai/imdb_pt` | Críticas de filmes do IMDB traduzidas para o português (`text`, `label`) | `train` 25.000, `test` 5.000, `test_all` 25.000 | Não informada no card; conferir antes de usar | Já é binário |
+
+Usar só o `test` do IMDB, e apenas como avaliação fora do domínio. O modelo não treina nele.
+
+As colunas `site_category_lv1` da B2W permitem um segundo teste de generalização sem trocar de dataset: treinar em algumas categorias de produto e avaliar em outras.
 
 ### Tamanho dos modelos candidatos
 
@@ -53,7 +66,8 @@ O DistilBERT multilíngue tem **mais** parâmetros que o BERTimbau base, por cau
 
 | Risco | Efeito | Mitigação |
 |---|---|---|
-| A leitura do tema estar errada | Retrabalho grande | Confirmar com o professor antes de escrever código (P1) |
+| Prazo curto (4 dias até 27/11) | Sem tempo para slides e ensaio | Seguir o cronograma por dia; o E6 é opcional e sai primeiro se atrasar |
+| Licença do IMDB-pt não informada | Problema ao citar o dataset | Conferir o card; plano B: teste entre categorias de produto da própria B2W |
 | Sessão do Colab cair ou ficar sem GPU | Experimentos incompletos | Experimentos curtos e independentes, salvando resultados a cada etapa |
 | Dataset sem licença clara ou difícil de baixar | Atraso | Escolher entre datasets já no Hugging Face Hub |
 | A tarefa ficar "fácil demais" e o sobreajuste não aparecer | R6 fica fraco | Usar o subconjunto pequeno do E3; aumentar épocas |
@@ -61,12 +75,12 @@ O DistilBERT multilíngue tem **mais** parâmetros que o BERTimbau base, por cau
 
 ## Fases
 
-Sem datas por enquanto, porque a data de entrega ainda não foi informada (P2).
+Apresentação na sexta-feira, 2026-11-27.
 
-1. **Planejamento**: este documento, requisitos, roteiro inicial. *(em andamento)*
-2. **Fundamentos e referências**: `docs/fundamentos.md`, fontes em `referencias.md`.
-3. **Código**: `code/` com os blocos marcados; teste rápido em CPU com poucos exemplos.
-4. **Execução no Colab**: experimentos E1–E5, resultados em `results/`.
-5. **Análise**: `docs/analise-codigo.md`, `docs/sobreajuste-generalizacao.md`, `docs/aplicacoes-vantagens-limitacoes.md`, figuras.
-6. **Slides**: `slides/apresentacao.tex`.
-7. **Ensaio**: cronometrar, ajustar o roteiro, revisar fontes dos números.
+| Dia | Fases |
+|---|---|
+| Seg 23/11 | 1. **Planejamento** (este documento, requisitos, roteiro) · 2. **Fundamentos e referências** (`docs/fundamentos.md`, `referencias.md`) |
+| Ter 24/11 | 3. **Código** (`code/` com os blocos marcados, teste em CPU) · 4. **Execução no Colab** (E1–E5, resultados em `results/`) |
+| Qua 25/11 | 5. **Análise** (figuras, `analise-codigo.md`, `sobreajuste-generalizacao.md`, `aplicacoes-vantagens-limitacoes.md`) |
+| Qui 26/11 | 6. **Slides** (`slides/apresentacao.tex`) · 7. **Ensaio** (cronometrar, ajustar o roteiro, revisar as fontes dos números) |
+| Sex 27/11 | Apresentação |
