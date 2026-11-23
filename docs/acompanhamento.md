@@ -10,10 +10,10 @@ Atualizar a cada tarefa concluída ou decisão tomada. Status: `a fazer`, `fazen
 |---|---|---|---|---|---|---|
 | T01 | Montar estrutura do repositório e docs de planejamento | 1 | — | 23/11 | feito | |
 | T02 | Confirmar a leitura do tema com o professor | 1 | todos | 23/11 | feito | P1: confirmado, qualquer tarefa |
-| T03 | Escolher o dataset (domínio principal + domínio para generalização) | 1 | R5, R7 | 23/11 | fazendo | Proposta D4 em `planejamento.md`; falta aprovar |
-| T04 | Confirmar stack e modelo (D1, D2) | 1 | R2–R4 | 23/11 | a fazer | |
-| T05 | Escrever `docs/fundamentos.md` | 2 | R1 | 23/11 | a fazer | |
-| T06 | Levantar e conferir as referências | 2 | R1, R8 | 23/11 | a fazer | |
+| T03 | Escolher o dataset (domínio principal + domínio para generalização) | 1 | R5, R7 | 23/11 | feito | B2W-Reviews01 + IMDB-pt (D4) |
+| T04 | Confirmar stack e modelo (D1, D2) | 1 | R2–R4 | 23/11 | feito | |
+| T05 | Escrever `docs/fundamentos.md` | 2 | R1 | 23/11 | feito | Rascunho; números ⚠ dependem da T06 |
+| T06 | Levantar e conferir as referências | 2 | R1, R8 | 23/11 | fazendo | Resumos de [1], [2], [4], [5] e card de [3] lidos; falta o corpo dos artigos |
 | T07 | Escrever o código com os blocos marcados | 3 | R2–R4, R6 | 24/11 | a fazer | Código próprio (P5) |
 | T08 | Teste rápido do código em CPU | 3 | R2–R4 | 24/11 | a fazer | |
 | T09 | Rodar E1–E5 no Colab e salvar em `results/` | 4 | R5–R7 | 24/11 | a fazer | |
@@ -32,6 +32,7 @@ Atualizar a cada tarefa concluída ou decisão tomada. Status: `a fazer`, `fazen
 | 2026-11-23 | Mantidas as regras gerais: pt-BR, sem demo ao vivo, resultados pré-gerados em `results/`, Colab T4, slides em Beamer, números com fonte | Combinado |
 | 2026-11-23 | Tema: ajuste fino supervisionado de modelo pré-treinado, em qualquer tarefa | Confirmado pelo professor (P1) |
 | 2026-11-23 | O código do exemplo é escrito por mim | Permitido pelo professor (P5) |
+| 2026-11-23 | Aprovados: stack `transformers` + `datasets` + `evaluate`, modelo BERTimbau base, datasets B2W-Reviews01 e IMDB-pt (D1, D2, D4) | Aprovado pelo usuário |
 
 ## Pendências e perguntas
 

@@ -22,7 +22,7 @@ Detalhes e critérios de "pronto" em [docs/requisitos.md](docs/requisitos.md). O
 
 | # | Requisito | Onde será atendido | Status |
 |---|---|---|---|
-| R1 | Explicar o método | `docs/fundamentos.md` | ☐ |
+| R1 | Explicar o método | [docs/fundamentos.md](docs/fundamentos.md) | ◐ rascunho |
 | R2 | Código: preparação dos dados | `code/`, `docs/analise-codigo.md` | ☐ |
 | R3 | Código: treinamento | `code/`, `docs/analise-codigo.md` | ☐ |
 | R4 | Código: inferência | `code/`, `docs/analise-codigo.md` | ☐ |
@@ -43,6 +43,7 @@ trabalho-nlp/
 ├── CLAUDE.md                    # regras e contexto para sessões com o Claude Code
 └── docs/
     ├── requisitos.md            # enunciado quebrado em requisitos verificáveis
+    ├── fundamentos.md           # teoria do ajuste fino (R1)
     ├── planejamento.md          # escopo, decisões, riscos e fases
     ├── acompanhamento.md        # tarefas, decisões tomadas e pendências
     ├── roteiro-apresentacao.md  # blocos da apresentação e tempos

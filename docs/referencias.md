@@ -1,21 +1,21 @@
 # Referências
 
-Toda afirmação numérica dos slides precisa vir de uma fonte desta lista ou de `results/`. Status: `a conferir` (citação ainda não verificada) ou `conferida` (lida, com página/seção anotada).
+Toda afirmação numérica dos slides precisa vir de uma fonte desta lista ou de `results/`. Status: `a conferir` (citação ainda não verificada), `resumo conferido` (só o abstract foi lido; serve para números do resumo) ou `conferida` (lida, com página/seção anotada).
 
 ## Fundamentos
 
 | Ref | Fonte | Uso previsto | Status |
 |---|---|---|---|
-| [1] | Devlin et al., "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding", NAACL 2019 | Pré-treino + ajuste fino; cabeça de classificação | a conferir |
-| [2] | Howard e Ruder, "Universal Language Model Fine-tuning for Text Classification" (ULMFiT), ACL 2018 | Transferência de aprendizado em NLP; ajuste gradual | a conferir |
-| [3] | Souza, Nogueira e Lotufo, "BERTimbau: Pretrained BERT Models for Brazilian Portuguese", BRACIS 2020 | Modelo usado no exemplo | a conferir |
+| [1] | Devlin et al., "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding", NAACL 2019 | Pré-treino + ajuste fino; cabeça de classificação | resumo conferido |
+| [2] | Howard e Ruder, "Universal Language Model Fine-tuning for Text Classification" (ULMFiT), ACL 2018 | Transferência de aprendizado em NLP; ajuste gradual | resumo conferido |
+| [3] | Souza, Nogueira e Lotufo, "BERTimbau: Pretrained BERT Models for Brazilian Portuguese", BRACIS 2020 | Modelo usado no exemplo | card do modelo conferido (110 M / 335 M, brWaC) |
 
 ## Sobreajuste, estabilidade e generalização
 
 | Ref | Fonte | Uso previsto | Status |
 |---|---|---|---|
-| [4] | Mosbach, Andriushchenko e Klakow, "On the Stability of Fine-tuning BERT", ICLR 2021 | Instabilidade do ajuste fino com poucos dados | a conferir |
-| [5] | Dodge et al., "Fine-Tuning Pretrained Language Models: Weight Initializations, Data Orders, and Early Stopping", 2020 | Variação entre sementes; early stopping | a conferir |
+| [4] | Mosbach, Andriushchenko e Klakow, "On the Stability of Fine-tuning BERT", ICLR 2021 | Instabilidade do ajuste fino com poucos dados | resumo conferido |
+| [5] | Dodge et al., "Fine-Tuning Pretrained Language Models: Weight Initializations, Data Orders, and Early Stopping", 2020 | Variação entre sementes; early stopping | resumo conferido |
 
 ## Documentação
 

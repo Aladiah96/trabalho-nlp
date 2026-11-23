@@ -12,7 +12,7 @@ Contexto e regras para trabalhar neste repositório.
 ## Regras
 
 - Escrever tudo em **português do Brasil** (docs, comentários do código, slides). Nomes de variáveis e APIs ficam como estão.
-- Stack proposta: **Hugging Face `transformers` (`Trainer`) + `datasets` + `evaluate`**. Ainda precisa ser confirmada (ver `docs/planejamento.md`). Depois de confirmada, não trocar de biblioteca sem combinar antes.
+- Stack fixa: **Hugging Face `transformers` (`Trainer`) + `datasets` + `evaluate`**, modelo **BERTimbau base**, datasets **B2W-Reviews01** (principal) e **IMDB-pt** (fora do domínio). Não trocar sem combinar antes.
 - **Sem demo ao vivo.** O código roda antes e os resultados vão para `results/`. Os slides mostram trechos de código e saídas já geradas.
 - O código precisa deixar explícitas, com comentários marcados, as partes que o professor pediu:
   1. `# [PREPARAÇÃO DOS DADOS]`: carga do dataset, divisão treino/validação/teste, tokenização.
@@ -31,4 +31,5 @@ Contexto e regras para trabalhar neste repositório.
 - Acompanhamento (tarefas, decisões, pendências): `docs/acompanhamento.md`
 - Roteiro dos slides: `docs/roteiro-apresentacao.md`
 - Referências: `docs/referencias.md`
-- A criar: `docs/fundamentos.md`, `docs/analise-codigo.md`, `docs/sobreajuste-generalizacao.md`, `docs/aplicacoes-vantagens-limitacoes.md`, `code/`, `results/`, `slides/` (Beamer; compilar com `latexmk -pdf` dentro de `slides/`)
+- Fundamentos (teoria): `docs/fundamentos.md`
+- A criar: `docs/analise-codigo.md`, `docs/sobreajuste-generalizacao.md`, `docs/aplicacoes-vantagens-limitacoes.md`, `code/`, `results/`, `slides/` (Beamer; compilar com `latexmk -pdf` dentro de `slides/`)

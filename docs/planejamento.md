@@ -13,14 +13,14 @@
 
 **Não entra:** demo ao vivo; métodos de ajuste eficiente (LoRA, adapters, prompt tuning) além de uma menção de contexto; treino de LLMs grandes.
 
-## Decisões propostas (a confirmar)
+## Decisões
 
 | # | Decisão | Proposta | Motivo | Status |
 |---|---|---|---|---|
-| D1 | Stack | Hugging Face `transformers` (`Trainer`) + `datasets` + `evaluate` | É o padrão para código pronto de ajuste fino e mostra as três etapas de forma clara | Proposta |
-| D2 | Modelo | BERTimbau base (`neuralmind/bert-base-portuguese-cased`) | Modelo treinado em português, do tamanho do BERT base, cabe na T4 | Proposta |
+| D1 | Stack | Hugging Face `transformers` (`Trainer`) + `datasets` + `evaluate` | É o padrão para código pronto de ajuste fino e mostra as três etapas de forma clara | Aprovada |
+| D2 | Modelo | BERTimbau base (`neuralmind/bert-base-portuguese-cased`) | Modelo treinado em português, do tamanho do BERT base, cabe na T4 | Aprovada |
 | D3 | Tarefa | Classificação de sentimento em pt-BR (positivo/negativo) | Fácil de explicar em pouco tempo; métricas simples; o resultado dá para entender olhando os exemplos | Proposta |
-| D4 | Dataset | Principal: **B2W-Reviews01** (`ruanchaves/b2w-reviews01`), avaliações de produtos. Outro domínio: **IMDB em português** (`maritaca-ai/imdb_pt`), críticas de filmes | Os dois estão no Hub e são públicos, em pt-BR, com domínios diferentes (produto × filme), o que serve para o R7 | Proposta |
+| D4 | Dataset | Principal: **B2W-Reviews01** (`ruanchaves/b2w-reviews01`), avaliações de produtos. Outro domínio: **IMDB em português** (`maritaca-ai/imdb_pt`), críticas de filmes | Os dois estão no Hub e são públicos, em pt-BR, com domínios diferentes (produto × filme), o que serve para o R7 | Aprovada |
 | D5 | Ambiente | Colab com T4 (15 GB), resultados exportados para `results/` | GPU gratuita; sem demo ao vivo | Proposta |
 | D6 | Slides | LaTeX Beamer em `slides/` | Mesmo formato combinado para o curso | Proposta |
 
