@@ -47,7 +47,7 @@ Verificado em 2026-11-23 a partir dos arquivos de configuração no Hugging Face
 | BERTimbau large | 334,4 M | Calculado do `config.json`: dimensão 1024, 24 camadas |
 | DistilBERT multilíngue (`distilbert/distilbert-base-multilingual-cased`) | 135,4 M | Metadado da página do modelo |
 
-Estimativa de memória (não medida): no ajuste fino completo com AdamW em fp32, cada parâmetro gasta uns 16 bytes (pesos, gradientes e os dois estados do otimizador). Para o base são cerca de 1,7 GB, e para o large cerca de 5,4 GB, antes das ativações. Os dois cabem na T4. O número real vai ser medido no Colab e salvo em `results/`.
+Estimativa de memória: no ajuste fino completo com AdamW em fp32, cada parâmetro gasta uns 16 bytes (pesos, gradientes e os dois estados do otimizador). Para o base são cerca de 1,7 GB, e para o large cerca de 5,4 GB, antes das ativações. Os dois cabem na T4. Medido no Colab (E2, BERTimbau base, batch 32, fp16): pico de **3,01 GB** numa T4 (`results/e2_ajuste_completo/metricas.json`).
 
 O DistilBERT multilíngue tem **mais** parâmetros que o BERTimbau base, por causa do vocabulário multilíngue. Ele só serve de plano B se o problema for tempo de execução (6 camadas em vez de 12), não memória.
 

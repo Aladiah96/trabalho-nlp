@@ -1,0 +1,19 @@
+{
+  "avaliacoes_no_dataset": 132373,
+  "apos_limpeza_e_sem_duplicatas": 110882,
+  "treino_usado": {
+    "total": 300,
+    "negativo": 99,
+    "positivo": 201
+  },
+  "validacao_usada": {
+    "total": 2000,
+    "negativo": 608,
+    "positivo": 1392
+  },
+  "teste": {
+    "total": 11089,
+    "negativo": 3260,
+    "positivo": 7829
+  }
+}

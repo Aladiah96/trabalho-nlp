@@ -26,14 +26,14 @@ Detalhes e critérios de "pronto" em [docs/requisitos.md](docs/requisitos.md). O
 | R2 | Código: preparação dos dados | `code/`, `docs/analise-codigo.md` | ☐ |
 | R3 | Código: treinamento | `code/`, `docs/analise-codigo.md` | ☐ |
 | R4 | Código: inferência | `code/`, `docs/analise-codigo.md` | ☐ |
-| R5 | Exemplo de adaptação a uma tarefa | `code/`, `results/` | ☐ |
-| R6 | Discussão de sobreajuste | `docs/sobreajuste-generalizacao.md`, `results/` | ☐ |
-| R7 | Discussão de generalização | `docs/sobreajuste-generalizacao.md`, `results/` | ☐ |
+| R5 | Exemplo de adaptação a uma tarefa | `code/`, [results/tabela_resultados.md](results/tabela_resultados.md) | ◐ resultados gerados |
+| R6 | Discussão de sobreajuste | `docs/sobreajuste-generalizacao.md`, `results/` | ◐ resultados gerados |
+| R7 | Discussão de generalização | `docs/sobreajuste-generalizacao.md`, `results/` | ◐ resultados gerados |
 | R8 | Exemplos de aplicação | `docs/aplicacoes-vantagens-limitacoes.md` | ☐ |
 | R9 | Vantagens e limitações | `docs/aplicacoes-vantagens-limitacoes.md` | ☐ |
 | R10 | Duração máxima de 25 minutos | [docs/roteiro-apresentacao.md](docs/roteiro-apresentacao.md) | ☐ |
 
-Os docs de análise (`analise-codigo.md` etc.) e a pasta `results/` ainda não existem. Eles serão criados nas fases seguintes do [planejamento](docs/planejamento.md).
+Os docs de análise (`analise-codigo.md` etc.) ainda não existem. Eles serão criados nas fases seguintes do [planejamento](docs/planejamento.md).
 
 ## Como rodar
 
@@ -54,8 +54,10 @@ trabalho-nlp/
 ├── CLAUDE.md                    # regras e contexto para sessões com o Claude Code
 ├── code/
 │   ├── ajuste_fino.py           # experimentos E1–E6, com os blocos marcados
+│   ├── gerar_figuras.py         # figuras e tabela a partir de results/
 │   ├── notebook_colab.ipynb     # roda tudo no Colab e gera results.zip
 │   └── requirements.txt
+├── results/                     # saídas do Colab (T4): JSON por experimento, figuras/, tabela_resultados.md
 └── docs/
     ├── requisitos.md            # enunciado quebrado em requisitos verificáveis
     ├── fundamentos.md           # teoria do ajuste fino (R1)

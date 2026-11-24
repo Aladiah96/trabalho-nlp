@@ -1,0 +1,47 @@
+[
+  {
+    "n_treino": 100,
+    "teste_loss": 0.5407785773277283,
+    "teste_acuracia": 0.7060149697898819,
+    "teste_f1_macro": 0.4147298915245316,
+    "teste_runtime": 18.6885,
+    "teste_samples_per_second": 593.359,
+    "teste_steps_per_second": 9.311
+  },
+  {
+    "n_treino": 300,
+    "teste_loss": 0.3776559829711914,
+    "teste_acuracia": 0.8935882405987916,
+    "teste_f1_macro": 0.8691156339450851,
+    "teste_runtime": 18.9344,
+    "teste_samples_per_second": 585.653,
+    "teste_steps_per_second": 9.19
+  },
+  {
+    "n_treino": 1000,
+    "teste_loss": 0.15342143177986145,
+    "teste_acuracia": 0.9467039408422762,
+    "teste_f1_macro": 0.9359941498550283,
+    "teste_runtime": 19.5551,
+    "teste_samples_per_second": 567.065,
+    "teste_steps_per_second": 8.898
+  },
+  {
+    "n_treino": 3000,
+    "teste_loss": 0.15178142488002777,
+    "teste_acuracia": 0.9540986563260889,
+    "teste_f1_macro": 0.9453442743148144,
+    "teste_runtime": 18.7502,
+    "teste_samples_per_second": 591.406,
+    "teste_steps_per_second": 9.28
+  },
+  {
+    "n_treino": 10000,
+    "teste_loss": 0.14091083407402039,
+    "teste_acuracia": 0.9617639101812607,
+    "teste_f1_macro": 0.9540110054263409,
+    "teste_runtime": 19.409,
+    "teste_samples_per_second": 571.333,
+    "teste_steps_per_second": 8.965
+  }
+]

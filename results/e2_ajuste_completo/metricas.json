@@ -1,0 +1,43 @@
+{
+  "experimento": "e2",
+  "hiperparametros": {
+    "n_treino": 20000,
+    "epocas": 2,
+    "taxa": 2e-05,
+    "weight_decay": 0.01,
+    "batch": 32,
+    "avaliar_por": "steps",
+    "avaliar_treino": false,
+    "early_stopping": false,
+    "max_tokens": 128
+  },
+  "epocas_executadas": 2.0,
+  "melhor_checkpoint": null,
+  "teste": {
+    "teste_loss": 0.12260055541992188,
+    "teste_acuracia": 0.9638380376950131,
+    "teste_f1_macro": 0.9565790193837412,
+    "teste_runtime": 19.4457,
+    "teste_samples_per_second": 570.254,
+    "teste_steps_per_second": 8.948
+  },
+  "matriz_confusao": {
+    "linhas_real_colunas_previsto": [
+      "negativo",
+      "positivo"
+    ],
+    "valores": [
+      [
+        3077,
+        183
+      ],
+      [
+        218,
+        7611
+      ]
+    ]
+  },
+  "tempo_treino_s": 242.2,
+  "memoria_gpu_pico_gb": 3.01,
+  "gpu": "Tesla T4"
+}

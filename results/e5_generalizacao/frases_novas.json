@@ -1,0 +1,50 @@
+[
+  {
+    "texto": "Chegou antes do prazo e funciona perfeitamente.",
+    "esperado": "positivo",
+    "previsto": "positivo",
+    "probabilidade": 0.9988
+  },
+  {
+    "texto": "Não recomendo, quebrou na primeira semana.",
+    "esperado": "negativo",
+    "previsto": "negativo",
+    "probabilidade": 0.991
+  },
+  {
+    "texto": "O filme é longo, mas vale cada minuto.",
+    "esperado": "positivo",
+    "previsto": "positivo",
+    "probabilidade": 0.9937
+  },
+  {
+    "texto": "O atendimento do restaurante foi péssimo.",
+    "esperado": "negativo",
+    "previsto": "negativo",
+    "probabilidade": 0.8716
+  },
+  {
+    "texto": "Não é ruim.",
+    "esperado": "positivo",
+    "previsto": "positivo",
+    "probabilidade": 0.6068
+  },
+  {
+    "texto": "Ótimo, mais um carregador que não carrega.",
+    "esperado": "negativo",
+    "previsto": "positivo",
+    "probabilidade": 0.9959
+  },
+  {
+    "texto": "Esperava mais pelo preço que paguei.",
+    "esperado": "negativo",
+    "previsto": "negativo",
+    "probabilidade": 0.775
+  },
+  {
+    "texto": "A entrega foi feita na terça-feira.",
+    "esperado": "neutro",
+    "previsto": "positivo",
+    "probabilidade": 0.7274
+  }
+]

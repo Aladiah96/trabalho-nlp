@@ -1,0 +1,43 @@
+{
+  "experimento": "e4",
+  "hiperparametros": {
+    "n_treino": 500,
+    "epocas": 20,
+    "taxa": 5e-05,
+    "weight_decay": 0.01,
+    "batch": 16,
+    "avaliar_por": "epoch",
+    "avaliar_treino": true,
+    "early_stopping": true,
+    "max_tokens": 128
+  },
+  "epocas_executadas": 5.0,
+  "melhor_checkpoint": "results/e4_regularizado/checkpoints/checkpoint-64",
+  "teste": {
+    "teste_loss": 0.16602852940559387,
+    "teste_acuracia": 0.9453512489854811,
+    "teste_f1_macro": 0.9344102840999597,
+    "teste_runtime": 18.9629,
+    "teste_samples_per_second": 584.773,
+    "teste_steps_per_second": 9.176
+  },
+  "matriz_confusao": {
+    "linhas_real_colunas_previsto": [
+      "negativo",
+      "positivo"
+    ],
+    "valores": [
+      [
+        2977,
+        283
+      ],
+      [
+        323,
+        7506
+      ]
+    ]
+  },
+  "tempo_treino_s": 85.1,
+  "memoria_gpu_pico_gb": 2.24,
+  "gpu": "Tesla T4"
+}

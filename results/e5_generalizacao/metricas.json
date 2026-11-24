@@ -1,0 +1,36 @@
+{
+  "b2w_teste_mesmo_dominio": {
+    "teste_loss": 0.12260055541992188,
+    "teste_acuracia": 0.9638380376950131,
+    "teste_f1_macro": 0.9565790193837412,
+    "teste_runtime": 19.4457,
+    "teste_samples_per_second": 570.254,
+    "teste_steps_per_second": 8.948
+  },
+  "imdb_pt_teste_outro_dominio": {
+    "imdb_loss": 0.4416120648384094,
+    "imdb_model_preparation_time": 0.0048,
+    "imdb_acuracia": 0.8218,
+    "imdb_f1_macro": 0.819116550616366,
+    "imdb_runtime": 39.926,
+    "imdb_samples_per_second": 125.232,
+    "imdb_steps_per_second": 3.932
+  },
+  "imdb_max_tokens": 512,
+  "imdb_matriz_confusao": {
+    "linhas_real_colunas_previsto": [
+      "negativo",
+      "positivo"
+    ],
+    "valores": [
+      [
+        1750,
+        750
+      ],
+      [
+        141,
+        2359
+      ]
+    ]
+  }
+}

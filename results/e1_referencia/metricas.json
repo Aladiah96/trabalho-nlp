@@ -1,0 +1,11 @@
+{
+  "classe_majoritaria": {
+    "classe": "positivo",
+    "acuracia": 0.7060149697898819,
+    "f1_macro": 0.41383867216407655
+  },
+  "tfidf_regressao_logistica": {
+    "acuracia": 0.9334475606456849,
+    "f1_macro": 0.9189718025173421
+  }
+}
