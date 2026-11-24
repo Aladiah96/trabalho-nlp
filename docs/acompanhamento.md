@@ -12,8 +12,8 @@ Atualizar a cada tarefa concluída ou decisão tomada. Status: `a fazer`, `fazen
 | T02 | Confirmar a leitura do tema com o professor | 1 | todos | 23/11 | feito | P1: confirmado, qualquer tarefa |
 | T03 | Escolher o dataset (domínio principal + domínio para generalização) | 1 | R5, R7 | 23/11 | feito | B2W-Reviews01 + IMDB-pt (D4) |
 | T04 | Confirmar stack e modelo (D1, D2) | 1 | R2–R4 | 23/11 | feito | |
-| T05 | Escrever `docs/fundamentos.md` | 2 | R1 | 23/11 | feito | Rascunho; números ⚠ dependem da T06 |
-| T06 | Levantar e conferir as referências | 2 | R1, R8 | 23/11 | fazendo | Resumos de [1], [2], [4], [5], [10]–[15] e card de [3] lidos; falta o apêndice do BERT (hiperparâmetros ⚠) e as referências dos datasets [8], [9] |
+| T05 | Escrever `docs/fundamentos.md` | 2 | R1 | 23/11 | feito | Números conferidos na T06 |
+| T06 | Levantar e conferir as referências | 2 | R1, R8 | 23/11 | feito | 24/11: apêndice A.3 do BERT e citações dos datasets conferidos; demais por resumo/card |
 | T07 | Escrever o código com os blocos marcados | 3 | R2–R4, R6 | 24/11 | feito | `code/ajuste_fino.py` (E1–E6) e `code/notebook_colab.ipynb` |
 | T08 | Teste rápido do código em CPU | 3 | R2–R4 | 24/11 | feito | E1–E6 com `--rapido` rodaram sem erro (torch 2.15, transformers 5.24, datasets 5.2) |
 | T09 | Rodar E1–E5 no Colab e salvar em `results/` | 4 | R5–R7 | 24/11 | feito | E1–E6 rodados em 23/11 numa T4; ver `results/tabela_resultados.md` |
@@ -21,7 +21,7 @@ Atualizar a cada tarefa concluída ou decisão tomada. Status: `a fazer`, `fazen
 | T11 | Escrever `docs/analise-codigo.md` | 5 | R2–R4 | 25/11 | feito | 24/11 |
 | T12 | Escrever `docs/sobreajuste-generalizacao.md` | 5 | R6, R7 | 25/11 | feito | 24/11 |
 | T13 | Escrever `docs/aplicacoes-vantagens-limitacoes.md` | 5 | R8, R9 | 25/11 | feito | 24/11 |
-| T14 | Montar os slides em Beamer | 6 | todos | 26/11 | a fazer | |
+| T14 | Montar os slides em Beamer | 6 | todos | 26/11 | feito | 24/11: 19 slides em `slides/apresentacao.pdf`; mapa slide → bloco em `roteiro-apresentacao.md` |
 | T15 | Ensaio cronometrado e ajuste do roteiro | 7 | R10 | 26/11 | a fazer | |
 
 ## Decisões tomadas

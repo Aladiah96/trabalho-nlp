@@ -36,4 +36,4 @@ Contexto e regras para trabalhar neste repositório.
 - Figuras e tabela: `code/gerar_figuras.py` (lê `results/`, grava `results/figuras/` e `results/tabela_resultados.md`)
 - Resultados (Colab T4, 23/11): `results/`; achados resumidos em `docs/acompanhamento.md`
 - Análises: `docs/analise-codigo.md` (R2–R4), `docs/sobreajuste-generalizacao.md` (R6, R7), `docs/aplicacoes-vantagens-limitacoes.md` (R8, R9)
-- A criar: `slides/` (Beamer; compilar com `latexmk -pdf` dentro de `slides/`)
+- Slides: `slides/apresentacao.tex` → `apresentacao.pdf` (Beamer, tema metropolis; compilar com `latexmk -pdf` dentro de `slides/`). Figuras vêm de `../results/figuras/`

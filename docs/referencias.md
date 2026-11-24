@@ -6,7 +6,7 @@ Toda afirmação numérica dos slides precisa vir de uma fonte desta lista ou de
 
 | Ref | Fonte | Uso previsto | Status |
 |---|---|---|---|
-| [1] | Devlin et al., "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding", NAACL 2019 | Pré-treino + ajuste fino; cabeça de classificação | resumo conferido |
+| [1] | Devlin et al., "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding", NAACL 2019 | Pré-treino + ajuste fino; cabeça de classificação | conferida (resumo + apêndice A.3: hiperparâmetros e dropout) |
 | [2] | Howard e Ruder, "Universal Language Model Fine-tuning for Text Classification" (ULMFiT), ACL 2018 | Transferência de aprendizado em NLP; ajuste gradual | resumo conferido |
 | [3] | Souza, Nogueira e Lotufo, "BERTimbau: Pretrained BERT Models for Brazilian Portuguese", BRACIS 2020 | Modelo usado no exemplo | card do modelo conferido (110 M / 335 M, brWaC) |
 
@@ -39,5 +39,5 @@ Toda afirmação numérica dos slides precisa vir de uma fonte desta lista ou de
 
 | Ref | Fonte | Uso previsto | Status |
 |---|---|---|---|
-| [8] | B2W-Reviews01: Real, Oshiro e Mafra, "B2W-Reviews01: An Open Product Reviews Corpus", STIL 2019. Hub: `ruanchaves/b2w-reviews01` (CC BY 4.0) | Dataset principal | a conferir |
-| [9] | IMDB em português, Hub: `maritaca-ai/imdb_pt` (licença não informada no card) | Avaliação fora do domínio | a conferir |
+| [8] | Real, Oshiro e Mafra, "B2W-Reviews01: an open product reviews corpus", STIL 2019. Hub: `ruanchaves/b2w-reviews01` (CC BY 4.0) | Dataset principal | conferida (citação do card) |
+| [9] | Versão em português do Large Movie Review Dataset (Maas et al., "Learning Word Vectors for Sentiment Analysis", ACL 2011). Hub: `maritaca-ai/imdb_pt`; o card não informa licença nem como foi feita a tradução | Avaliação fora do domínio | conferida (citação do script do dataset) |

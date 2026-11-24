@@ -63,7 +63,7 @@ O E4 é o E3 com weight decay de 0,01 e early stopping (paciência de 3 épocas,
 | Menos épocas / taxa menor | Menos tempo para decorar | E2 usa 2 épocas e taxa 2e-5 |
 | Early stopping | Escolhe a época pela validação | E4 |
 | Weight decay | Penaliza pesos grandes | E2, E4 (efeito pequeno aqui) |
-| Dropout | Desliga neurônios ao acaso durante o treino | Já vem no BERT (0,1), não foi alterado |
+| Dropout | Desliga neurônios ao acaso durante o treino | Já vem no BERT (0,1 [1, A.3]), não foi alterado |
 | Congelar camadas | Menos parâmetros livres | `fundamentos.md`, seção 5 |
 
 ## 3. Generalização
@@ -110,7 +110,7 @@ Matriz de confusão no IMDB-pt:
 - **O erro é quase todo de um lado:** críticas negativas viram "positivo". Hipóteses (não testadas separadamente):
   1. **Desbalanceamento do treino:** 70% das avaliações da B2W são positivas, e o modelo herdou essa tendência.
   2. **Textos diferentes:** críticas de filme são longas (mediana de 944 caracteres, contra 95 na B2W) e costumam elogiar partes do filme antes de criticá-lo.
-  3. **Tradução automática:** o IMDB-pt é traduzido do inglês e pode soar menos natural.
+  3. **Tradução:** o IMDB-pt é uma versão em português de críticas escritas em inglês [9] e pode soar menos natural que um texto escrito em português.
 - **Ainda assim, 82% sem nenhum exemplo de filme** mostra que o modelo aprendeu algo geral sobre sentimento, não só sobre produtos.
 
 ### 3.4 Como melhorar a generalização

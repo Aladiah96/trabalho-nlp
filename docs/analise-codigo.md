@@ -110,7 +110,7 @@ Contagem (`results/e2_ajuste_completo/parametros.json`):
 
 | Argumento | E2 | Papel |
 |---|---|---|
-| `learning_rate` | 2e-5 | Pequena, para ajustar sem destruir o que o pré-treino aprendeu. Faixa sugerida pelo BERT: 2e-5 a 5e-5 [1] ⚠ |
+| `learning_rate` | 2e-5 | Pequena, para ajustar sem destruir o que o pré-treino aprendeu. O BERT sugere 5e-5, 3e-5 ou 2e-5 [1, A.3] |
 | `num_train_epochs` | 2 | Poucas passadas bastam; mais épocas aumentam o risco de sobreajuste (E3) |
 | `per_device_train_batch_size` | 32 | Exemplos por atualização de pesos |
 | `warmup_steps` | 10% dos passos | A taxa começa em 0 e sobe; evita passos grandes enquanto a cabeça ainda é aleatória |

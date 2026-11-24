@@ -22,16 +22,16 @@ Detalhes e critérios de "pronto" em [docs/requisitos.md](docs/requisitos.md). O
 
 | # | Requisito | Onde será atendido | Status |
 |---|---|---|---|
-| R1 | Explicar o método | [docs/fundamentos.md](docs/fundamentos.md) | ◐ rascunho |
-| R2 | Código: preparação dos dados | `code/`, [docs/analise-codigo.md](docs/analise-codigo.md) | ◐ análise escrita |
-| R3 | Código: treinamento | `code/`, [docs/analise-codigo.md](docs/analise-codigo.md) | ◐ análise escrita |
-| R4 | Código: inferência | `code/`, [docs/analise-codigo.md](docs/analise-codigo.md) | ◐ análise escrita |
-| R5 | Exemplo de adaptação a uma tarefa | `code/`, [results/tabela_resultados.md](results/tabela_resultados.md) | ◐ resultados gerados |
-| R6 | Discussão de sobreajuste | [docs/sobreajuste-generalizacao.md](docs/sobreajuste-generalizacao.md) | ◐ análise escrita |
-| R7 | Discussão de generalização | [docs/sobreajuste-generalizacao.md](docs/sobreajuste-generalizacao.md) | ◐ análise escrita |
-| R8 | Exemplos de aplicação | [docs/aplicacoes-vantagens-limitacoes.md](docs/aplicacoes-vantagens-limitacoes.md) | ◐ análise escrita |
-| R9 | Vantagens e limitações | [docs/aplicacoes-vantagens-limitacoes.md](docs/aplicacoes-vantagens-limitacoes.md) | ◐ análise escrita |
-| R10 | Duração máxima de 25 minutos | [docs/roteiro-apresentacao.md](docs/roteiro-apresentacao.md) | ☐ |
+| R1 | Explicar o método | [docs/fundamentos.md](docs/fundamentos.md) | ◐ nos slides |
+| R2 | Código: preparação dos dados | `code/`, [docs/analise-codigo.md](docs/analise-codigo.md) | ◐ nos slides |
+| R3 | Código: treinamento | `code/`, [docs/analise-codigo.md](docs/analise-codigo.md) | ◐ nos slides |
+| R4 | Código: inferência | `code/`, [docs/analise-codigo.md](docs/analise-codigo.md) | ◐ nos slides |
+| R5 | Exemplo de adaptação a uma tarefa | `code/`, [results/tabela_resultados.md](results/tabela_resultados.md) | ◐ nos slides |
+| R6 | Discussão de sobreajuste | [docs/sobreajuste-generalizacao.md](docs/sobreajuste-generalizacao.md) | ◐ nos slides |
+| R7 | Discussão de generalização | [docs/sobreajuste-generalizacao.md](docs/sobreajuste-generalizacao.md) | ◐ nos slides |
+| R8 | Exemplos de aplicação | [docs/aplicacoes-vantagens-limitacoes.md](docs/aplicacoes-vantagens-limitacoes.md) | ◐ nos slides |
+| R9 | Vantagens e limitações | [docs/aplicacoes-vantagens-limitacoes.md](docs/aplicacoes-vantagens-limitacoes.md) | ◐ nos slides |
+| R10 | Duração máxima de 25 minutos | [docs/roteiro-apresentacao.md](docs/roteiro-apresentacao.md) | ◐ roteiro soma 25 min; falta ensaio |
 
 Os requisitos ficam "◐" até entrarem nos slides; "☑" depois do ensaio.
 
@@ -58,6 +58,9 @@ trabalho-nlp/
 │   ├── notebook_colab.ipynb     # roda tudo no Colab e gera results.zip
 │   └── requirements.txt
 ├── results/                     # saídas do Colab (T4): JSON por experimento, figuras/, tabela_resultados.md
+├── slides/
+│   ├── apresentacao.tex         # Beamer (latexmk -pdf dentro de slides/)
+│   └── apresentacao.pdf         # 19 slides
 └── docs/
     ├── requisitos.md            # enunciado quebrado em requisitos verificáveis
     ├── fundamentos.md           # teoria do ajuste fino (R1)

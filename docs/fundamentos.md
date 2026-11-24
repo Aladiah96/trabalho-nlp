@@ -1,6 +1,6 @@
 # Fundamentos: ajuste fino de modelos pré-treinados
 
-Material do bloco 2 do roteiro (6 min, requisito R1). Os números entre colchetes remetem a `referencias.md`. Os números marcados com ⚠ ainda precisam ser conferidos no texto do artigo, porque até agora só o resumo (abstract) foi lido.
+Material do bloco 2 do roteiro (6 min, requisito R1). Os números entre colchetes remetem a `referencias.md`.
 
 ## 1. O problema
 
@@ -47,7 +47,7 @@ Para um exemplo com rótulo verdadeiro *y* e probabilidades previstas *p* = soft
 
 O gradiente dessa perda passa pela cabeça e por **todas** as camadas do encoder. No ajuste fino completo, todos os ~109 M pesos são atualizados, mas com uma taxa de aprendizado pequena, para não "apagar" o que o pré-treino ensinou.
 
-Hiperparâmetros sugeridos no artigo do BERT ⚠: batch de 16 ou 32, taxa de aprendizado entre 2e-5 e 5e-5, de 2 a 4 épocas [1, apêndice A.3].
+Hiperparâmetros sugeridos no artigo do BERT [1, apêndice A.3]: batch de 16 ou 32; taxa de aprendizado (Adam) de 5e-5, 3e-5 ou 2e-5; 2, 3 ou 4 épocas; dropout fixo em 0,1. Os autores observam que conjuntos grandes (100 mil exemplos ou mais) são bem menos sensíveis à escolha de hiperparâmetros que os pequenos.
 
 ## 5. Variações
 
