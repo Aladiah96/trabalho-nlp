@@ -4,7 +4,7 @@ Contexto e regras para trabalhar neste repositório.
 
 ## O trabalho
 
-- Disciplina de NLP. Tema: **ajuste fino (fine-tuning) supervisionado de um modelo pré-treinado para uma tarefa**.
+- Disciplina de Processamento de Linguagem Natural, UFAL, Prof. Thales Vieira. Tema: **ajuste fino (fine-tuning) supervisionado de um modelo pré-treinado para uma tarefa**.
 - O professor pede: explicar o método; analisar um código destacando **preparação dos dados, treinamento e inferência**; apresentar um exemplo de adaptação a uma tarefa; discutir **sobreajuste e generalização**.
 - Entrega principal: apresentação de **até 25 minutos** com fundamentos, análise de um código pronto, exemplos de aplicação, vantagens e limitações.
 - O enunciado completo está em `README.md`; os requisitos verificáveis estão em `docs/requisitos.md`.

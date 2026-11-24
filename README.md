@@ -1,6 +1,6 @@
 # Ajuste fino de modelos pré-treinados para uma tarefa
 
-Trabalho da disciplina de NLP: apresentação de até 25 minutos sobre como adaptar um modelo pré-treinado a uma tarefa, com análise de um código pronto.
+Trabalho da disciplina de Processamento de Linguagem Natural (UFAL, Prof. Thales Vieira): apresentação de até 25 minutos sobre como adaptar um modelo pré-treinado a uma tarefa, com análise de um código pronto.
 
 ## Enunciado do professor
 
