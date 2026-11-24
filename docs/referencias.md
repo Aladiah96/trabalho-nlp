@@ -17,6 +17,17 @@ Toda afirmação numérica dos slides precisa vir de uma fonte desta lista ou de
 | [4] | Mosbach, Andriushchenko e Klakow, "On the Stability of Fine-tuning BERT", ICLR 2021 | Instabilidade do ajuste fino com poucos dados | resumo conferido |
 | [5] | Dodge et al., "Fine-Tuning Pretrained Language Models: Weight Initializations, Data Orders, and Early Stopping", 2020 | Variação entre sementes; early stopping | resumo conferido |
 
+## Aplicações e limitações
+
+| Ref | Fonte | Uso previsto | Status |
+|---|---|---|---|
+| [10] | Lee et al., "BioBERT: a pre-trained biomedical language representation model for biomedical text mining", Bioinformatics 2020 (arXiv 1901.08746) | Aplicação: biomedicina; pré-treino no domínio | resumo conferido |
+| [11] | Araci, "FinBERT: Financial Sentiment Analysis with Pre-trained Language Models", 2019 (arXiv 1908.10063) | Aplicação: finanças | resumo conferido |
+| [12] | Chalkidis et al., "LEGAL-BERT: The Muppets straight out of Law School", Findings of EMNLP 2020 (arXiv 2010.02559) | Aplicação: direito; estratégias de adaptação ao domínio | resumo conferido |
+| [13] | Ouyang et al., "Training language models to follow instructions with human feedback" (InstructGPT), NeurIPS 2022 (arXiv 2203.02155) | Aplicação: assistentes; ajuste fino supervisionado em LLMs | resumo conferido |
+| [14] | Hu et al., "LoRA: Low-Rank Adaptation of Large Language Models", ICLR 2022 (arXiv 2106.09685) | Limitação: custo do ajuste completo em modelos grandes | resumo conferido |
+| [15] | Kirkpatrick et al., "Overcoming catastrophic forgetting in neural networks", PNAS 2017 (arXiv 1612.00796) | Limitação: esquecimento catastrófico | resumo conferido |
+
 ## Documentação
 
 | Ref | Fonte | Uso previsto | Status |

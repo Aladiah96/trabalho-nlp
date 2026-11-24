@@ -35,4 +35,5 @@ Contexto e regras para trabalhar neste repositório.
 - Código: `code/ajuste_fino.py` (experimentos E1–E6; `--rapido` testa em CPU, saída em `results_teste_cpu/`, fora do git), `code/notebook_colab.ipynb`
 - Figuras e tabela: `code/gerar_figuras.py` (lê `results/`, grava `results/figuras/` e `results/tabela_resultados.md`)
 - Resultados (Colab T4, 23/11): `results/`; achados resumidos em `docs/acompanhamento.md`
-- A criar: `docs/analise-codigo.md`, `docs/sobreajuste-generalizacao.md`, `docs/aplicacoes-vantagens-limitacoes.md`, `slides/` (Beamer; compilar com `latexmk -pdf` dentro de `slides/`)
+- Análises: `docs/analise-codigo.md` (R2–R4), `docs/sobreajuste-generalizacao.md` (R6, R7), `docs/aplicacoes-vantagens-limitacoes.md` (R8, R9)
+- A criar: `slides/` (Beamer; compilar com `latexmk -pdf` dentro de `slides/`)

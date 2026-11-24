@@ -23,17 +23,17 @@ Detalhes e critérios de "pronto" em [docs/requisitos.md](docs/requisitos.md). O
 | # | Requisito | Onde será atendido | Status |
 |---|---|---|---|
 | R1 | Explicar o método | [docs/fundamentos.md](docs/fundamentos.md) | ◐ rascunho |
-| R2 | Código: preparação dos dados | `code/`, `docs/analise-codigo.md` | ☐ |
-| R3 | Código: treinamento | `code/`, `docs/analise-codigo.md` | ☐ |
-| R4 | Código: inferência | `code/`, `docs/analise-codigo.md` | ☐ |
+| R2 | Código: preparação dos dados | `code/`, [docs/analise-codigo.md](docs/analise-codigo.md) | ◐ análise escrita |
+| R3 | Código: treinamento | `code/`, [docs/analise-codigo.md](docs/analise-codigo.md) | ◐ análise escrita |
+| R4 | Código: inferência | `code/`, [docs/analise-codigo.md](docs/analise-codigo.md) | ◐ análise escrita |
 | R5 | Exemplo de adaptação a uma tarefa | `code/`, [results/tabela_resultados.md](results/tabela_resultados.md) | ◐ resultados gerados |
-| R6 | Discussão de sobreajuste | `docs/sobreajuste-generalizacao.md`, `results/` | ◐ resultados gerados |
-| R7 | Discussão de generalização | `docs/sobreajuste-generalizacao.md`, `results/` | ◐ resultados gerados |
-| R8 | Exemplos de aplicação | `docs/aplicacoes-vantagens-limitacoes.md` | ☐ |
-| R9 | Vantagens e limitações | `docs/aplicacoes-vantagens-limitacoes.md` | ☐ |
+| R6 | Discussão de sobreajuste | [docs/sobreajuste-generalizacao.md](docs/sobreajuste-generalizacao.md) | ◐ análise escrita |
+| R7 | Discussão de generalização | [docs/sobreajuste-generalizacao.md](docs/sobreajuste-generalizacao.md) | ◐ análise escrita |
+| R8 | Exemplos de aplicação | [docs/aplicacoes-vantagens-limitacoes.md](docs/aplicacoes-vantagens-limitacoes.md) | ◐ análise escrita |
+| R9 | Vantagens e limitações | [docs/aplicacoes-vantagens-limitacoes.md](docs/aplicacoes-vantagens-limitacoes.md) | ◐ análise escrita |
 | R10 | Duração máxima de 25 minutos | [docs/roteiro-apresentacao.md](docs/roteiro-apresentacao.md) | ☐ |
 
-Os docs de análise (`analise-codigo.md` etc.) ainda não existem. Eles serão criados nas fases seguintes do [planejamento](docs/planejamento.md).
+Os requisitos ficam "◐" até entrarem nos slides; "☑" depois do ensaio.
 
 ## Como rodar
 
@@ -61,6 +61,9 @@ trabalho-nlp/
 └── docs/
     ├── requisitos.md            # enunciado quebrado em requisitos verificáveis
     ├── fundamentos.md           # teoria do ajuste fino (R1)
+    ├── analise-codigo.md        # preparação dos dados, treinamento e inferência (R2–R4)
+    ├── sobreajuste-generalizacao.md  # E3/E4/E5/E6 (R6, R7)
+    ├── aplicacoes-vantagens-limitacoes.md  # (R8, R9)
     ├── planejamento.md          # escopo, decisões, riscos e fases
     ├── acompanhamento.md        # tarefas, decisões tomadas e pendências
     ├── roteiro-apresentacao.md  # blocos da apresentação e tempos
